@@ -18,3 +18,11 @@
   </li>
 </ul>
 
+<app-map
+  [center]="mapCenter"
+  [basemap]="basemapType"
+  [zoom]="mapZoomLevel"
+  (mapLoaded)="mapLoadedEvent($event)">
+</app-map>
+
+
