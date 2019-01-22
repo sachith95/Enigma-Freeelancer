@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { MapComponent } from './map/map.component';
+import {MatToolbarModule,MatIconModule,MatSidenavModule} from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AngularEsriModule } from 'angular-esri-components';
 
 @NgModule({
   declarations: [
@@ -10,7 +13,12 @@ import { MapComponent } from './map/map.component';
     MapComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatSidenavModule,
+    AngularEsriModule
   ],
   providers: [],
   bootstrap: [AppComponent]

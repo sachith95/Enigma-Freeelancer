@@ -1,28 +1,79 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
 
-<app-map
-  [center]="mapCenter"
-  [basemap]="basemapType"
-  [zoom]="mapZoomLevel"
-  (mapLoaded)="mapLoadedEvent($event)">
-</app-map>
+<html >
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+      
+        <title>Enigma</title>
+      
+        <link rel="stylesheet" href="https://js.arcgis.com/4.10/esri/css/main.css">
+        <style type="text/css">
+          html, body, .esri-view {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+          }
+        </style>
+      </head>
+<div class="example-container">
+  <mat-toolbar color="primary" >
+        <button mat-icon-button (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button>
+        <h1 >App</h1>
+      </mat-toolbar>
+
+ <mat-sidenav-container
+    class="example-sidenav-container">
+  <mat-sidenav #sidenav>
+   <h1>TEST</h1>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <app-map id= "viewDiv"
+      [center]="mapCenter"
+      [basemap]="basemapType"
+      [zoom]="mapZoomLevel"
+      (mapLoaded)="mapLoadedEvent($event)">
+      </app-map>
+  </mat-sidenav-content>
+</mat-sidenav-container>    
+</div>  
+<div id="editArea" class="editArea-container">
+    <div id="addFeatureDiv" style="display:block;">
+      <h3 class="list-heading">Report Incidents</h3>
+      <ul style="font-size: 13px; padding-left: 1.5em;">
+        <li>Select template from the list</li>
+        <li>Click on the map to create a new feature</li>
+        <li>Update associated attribute data</li>
+        <li>Click <i>Update Incident Info</i></li>
+      </ul>
+      <div id="addTemplatesDiv" style="background:#fff;"></div>
+    </div>
+
+    <div id="featureUpdateDiv" style="display:none; margin-top: 1em;">
+      <h3 class="list-heading">Enter the incident information</h3>
+      <div id="attributeArea">
+        <div id="formDiv"></div>
+        <input type="button" class="esri-button" value="Update incident info"
+          id="btnUpdate">
+      </div>
+      <br />
+      <div id="deleteArea">
+        <input type="button" class="esri-button" value="Delete incident" id="btnDelete">
+      </div>
+    </div>
+
+    <div id="updateInstructionDiv" style="text-align:center; display:block">
+      <p class="or-wrap">
+        <span class="or-text">Or</span>
+      </p>
+      <p id="selectHeader">Select an incident to edit or delete.</p>
+    </div>
+  </div>
+
+</html>
+
+
+
 
 

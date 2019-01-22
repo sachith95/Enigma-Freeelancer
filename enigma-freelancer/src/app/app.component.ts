@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
+import {MatSidenav} from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-root',
@@ -16,4 +17,6 @@ export class AppComponent {
     mapLoadedEvent(status: boolean) {
       console.log('The map loaded: ' + status);
     }
+    @ViewChild('sidenav') sidenav: MatSidenav;
+
 }
