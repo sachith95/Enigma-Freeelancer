@@ -1,6 +1,8 @@
 import { Component, OnInit,  Input, Output, EventEmitter ,ViewChild, ElementRef } from '@angular/core';
 import { loadModules } from 'esri-loader';
 import esri = __esri;
+import { Http } from '@angular/http';
+import { httpFactory } from '@angular/http/src/http_module';
 
 @Component({
   selector: 'app-map',
@@ -14,6 +16,7 @@ export class MapComponent implements OnInit {
    private  _zoom = 10;
    private  _center = [0.1278, 51.5074];
    private _basemap = 'streets';
+   private 
 
    @Input()
    set zoom(zoom: number) {
@@ -45,6 +48,10 @@ export class MapComponent implements OnInit {
    @Output() mapLoaded = new EventEmitter<boolean>();
   constructor() { }
 
+
+  addFeatureToLayer:function() {
+    
+  }
    // this is needed to be able to create the MapView at the DOM element in this component
    @ViewChild('mapViewNode') private mapViewEl: ElementRef;
   ngOnInit() {
@@ -58,9 +65,10 @@ export class MapComponent implements OnInit {
       'esri/widgets/FeatureTemplates',
       'esri/PopupTemplate',
       "esri/widgets/Locate",
-      "esri/core/watchUtils"
+      "esri/core/watchUtils",
+      "esri/request"
     ]).then(([EsriMap, EsriMapView,Search,FeatureLayer, Graphic, Expand,
-      FeatureForm, FeatureTemplates,PopupTemplate,Locate,watchUtils])=>{
+      FeatureForm, FeatureTemplates,PopupTemplate,Locate,watchUtils,esriRequest])=>{
 
   
         let template = new PopupTemplate({
@@ -124,6 +132,14 @@ export class MapComponent implements OnInit {
         //  sceneView : mapView
 
       });
+      let  url = "https://services9.arcgis.com/8DxVBkEZX2pin6L9/arcgis/rest/services/enigmafreelancer/FeatureServer/addFeatures";
+
+          esriRequest(url, {
+            responseType: "json"
+          }).then(function(response){
+            // The requested data
+            var geoJson = response.data;
+          });
       let editFeature, highlight;
 
         let locateBtn = new Locate({
