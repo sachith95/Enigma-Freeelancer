@@ -1,18 +1,15 @@
-<<<<<<< HEAD
-import {Component, ViewChild} from '@angular/core';
-import {MatSidenav} from '@angular/material/sidenav';
-=======
-import { Component, OnInit } from '@angular/core';
->>>>>>> origin/master
+import { Component, OnInit,ViewChild } from '@angular/core';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-<<<<<<< HEAD
-export class AppComponent {
-  title = 'enigma-freelancer';
+
+export class AppComponent implements OnInit {
+    constructor() {
+    }
+    title = 'enigma-freelancer';
     // Set our map properties
     mapCenter = [-122.4194, 37.7749];
     basemapType = 'satellite';
@@ -22,14 +19,7 @@ export class AppComponent {
     mapLoadedEvent(status: boolean) {
       console.log('The map loaded: ' + status);
     }
-    @ViewChild('sidenav') sidenav: MatSidenav;
-
-=======
-export class AppComponent implements OnInit {
-    constructor() {
-    }
 
     ngOnInit() {
     }
->>>>>>> origin/master
 }

@@ -5,33 +5,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-<<<<<<< HEAD
 import { MapComponent } from './map/map.component';
-import {MatToolbarModule,MatIconModule,MatSidenavModule} from '@angular/material';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularEsriModule } from 'angular-esri-components';
 import { HttpModule } from '@angular/http';
-
-@NgModule({
-  declarations: [
-    AppComponent,
-    MapComponent
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatSidenavModule,
-    AngularEsriModule,
-    HttpModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-=======
 import { AuthGuard } from './shared';
 
 // AoT requires an exported function for factories
@@ -58,11 +36,11 @@ export const createTranslateLoader = (http: HttpClient) => {
                 deps: [HttpClient]
             }
         }),
-        AppRoutingModule
+        AppRoutingModule,
+        HttpModule
     ],
-    declarations: [AppComponent],
+    declarations: [AppComponent,MapComponent],
     providers: [AuthGuard],
     bootstrap: [AppComponent]
->>>>>>> origin/master
 })
 export class AppModule {}

@@ -1,8 +1,8 @@
 import { Component, OnInit,  Input, Output, EventEmitter ,ViewChild, ElementRef } from '@angular/core';
 import { loadModules } from 'esri-loader';
 import esri = __esri;
-import { Http } from '@angular/http';
-import { httpFactory } from '@angular/http/src/http_module';
+//import { Http } from '@angular/http';
+//import { httpFactory } from '@angular/http/src/http_module';
 
 @Component({
   selector: 'app-map',
@@ -12,11 +12,9 @@ import { httpFactory } from '@angular/http/src/http_module';
 export class MapComponent implements OnInit {
 
 
-   //private vars
    private  _zoom = 10;
    private  _center = [0.1278, 51.5074];
-   private _basemap = 'streets';
-   private 
+   private _basemap = 'streets'; 
 
    @Input()
    set zoom(zoom: number) {
@@ -49,9 +47,6 @@ export class MapComponent implements OnInit {
   constructor() { }
 
 
-  addFeatureToLayer:function() {
-    
-  }
    // this is needed to be able to create the MapView at the DOM element in this component
    @ViewChild('mapViewNode') private mapViewEl: ElementRef;
   ngOnInit() {
