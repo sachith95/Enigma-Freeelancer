@@ -1,4 +1,4 @@
-
+@import url(https://js.arcgis.com/4.10/esri/css/main.css);
 .example-container {
   display: flex;
   flex-direction: column;
@@ -12,4 +12,10 @@
   /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
      causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
   flex: 1;
+}
+.esri-view {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
 }

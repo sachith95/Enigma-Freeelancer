@@ -7,7 +7,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MapComponent } from './map/map.component';
+import { MapComponent } from './layout/map/map.component';
 import { AngularEsriModule } from 'angular-esri-components';
 import { HttpModule } from '@angular/http';
 import { AuthGuard } from './shared';
@@ -37,9 +37,10 @@ export const createTranslateLoader = (http: HttpClient) => {
             }
         }),
         AppRoutingModule,
-        HttpModule
+        HttpModule,
+        AngularEsriModule
     ],
-    declarations: [AppComponent,MapComponent],
+    declarations: [AppComponent],
     providers: [AuthGuard],
     bootstrap: [AppComponent]
 })
