@@ -27,6 +27,7 @@
     "@ngx-translate/core": "11.0.0",
     "@ngx-translate/http-loader": "4.0.0",
     "@types/arcgis-js-api": "^4.10.0",
+    "@types/jquery": "^3.3.29",
     "angular-esri-components": "^2.0.0",
     "angular-esri-map": "^2.0.5",
     "chart.js": "2.7.3",

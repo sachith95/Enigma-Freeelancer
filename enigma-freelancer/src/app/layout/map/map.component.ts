@@ -2,7 +2,7 @@ import { Component, OnInit,  Input, Output, EventEmitter , ViewChild, ElementRef
 import { loadModules } from 'esri-loader';
 import { routerTransition } from './../../router.animations';
 import esri = __esri;
-
+declare var $: any;
 
 
 @Component({
@@ -11,7 +11,39 @@ import esri = __esri;
   <h1>TESTS</h1>
    <div #mapViewNode> <div id="viewDiv"
      (mapLoaded)="mapLoadedEvent($event)">
-     </div> 
+     </div>
+     <div id="editArea" class="editArea-container">
+    <div id="addFeatureDiv" style="display:block;">
+      <h3 class="list-heading">Report Incidents</h3>
+      <ul style="font-size: 13px; padding-left: 1.5em;">
+        <li>Select template from the list</li>
+        <li>Click on the map to create a new feature</li>
+        <li>Update associated attribute data</li>
+        <li>Click <i>Update Incident Info</i></li>
+      </ul>
+      <div id="addTemplatesDiv" style="background:#fff;"></div>
+    </div>
+
+    <div id="featureUpdateDiv" style="display:none; margin-top: 1em;">
+      <h3 class="list-heading">Enter the incident information</h3>
+      <div id="attributeArea">
+        <div id="formDiv"></div>
+        <input type="button" class="esri-button" value="Update incident info"
+          id="btnUpdate">
+      </div>
+      <br />
+      <div id="deleteArea">
+        <input type="button" class="esri-button" value="Delete incident" id="btnDelete">
+      </div>
+    </div>
+
+    <div id="updateInstructionDiv" style="text-align:center; display:block">
+      <p class="or-wrap">
+        <span class="or-text">Or</span>
+      </p>
+      <p id="selectHeader">Select an incident to edit or delete.</p>
+    </div>
+  </div>
 </div>`,
   styleUrls: ['./map.component.css'],
   animations: [routerTransition()]
@@ -50,6 +82,8 @@ export class MapComponent implements OnInit {
      return this._basemap;
    }
 
+   
+
    @Output() mapLoaded = new EventEmitter<boolean>();
   constructor() { }
 
@@ -57,6 +91,30 @@ export class MapComponent implements OnInit {
    // this is needed to be able to create the MapView at the DOM element in this component
    @ViewChild('mapViewNode') private mapViewEl: ElementRef;
   ngOnInit() {
+    function AddFeature(x: Number, y: Number): void {
+    const  url = 'https://services9.arcgis.com/8DxVBkEZX2pin6L9/arcgis/rest/services/enigmafreelancer/FeatureServer/addFeatures';
+    //var url = "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Notes/FeatureServer/0/addFeatures";
+    let feature = {
+      'geometry': { 'x': 2, 'y': 52 },
+      'attributes': {
+        'note': 'Hello!',
+        'name': 'Guus'
+      },
+      'spatialReference': {
+        'wkid': '4326'
+      }
+    };
+    $.post(url, {
+      features: JSON.stringify([feature]),
+      f: 'json'
+    })
+      .done(function (results) {
+        console.log(results);
+      })
+      .fail(function (error) {
+        console.log(error);
+      });
+  }
     loadModules([
       'esri/Map',
       'esri/views/MapView', 'esri/widgets/Search',
@@ -132,23 +190,18 @@ export class MapComponent implements OnInit {
         //  sceneView : mapView
 
       });
-      let  url = 'https://services9.arcgis.com/8DxVBkEZX2pin6L9/arcgis/rest/services/enigmafreelancer/FeatureServer/addFeatures';
+      
 
-          esriRequest(url, {
-            responseType: 'json'
-          }).then(function(response){
-            // The requested data
-            var geoJson = response.data;
-          });
       let editFeature, highlight;
 
         let locateBtn = new Locate({
           view: mapView
         });
-        locateBtn.locate().then(function(locateEvent){
+        locateBtn.locate().then(function(locateEvent) {
           console.log('EVENT', locateEvent.coords);
           console.log('EVENTss', locateEvent.coords.latitude);
           console.log('EVENTssc', locateEvent.Position.coords);
+          AddFeature(locateEvent.coords.latitude,locateEvent.Position.coords);
         });
 
       mapView.ui.add(searchWidget, {
@@ -176,7 +229,7 @@ export class MapComponent implements OnInit {
 
     // Listen to the feature form's submit event.
     // Update feature attributes shown in the form.
-    featureForm.on('submit', function(){
+    featureForm.on('submit', function() {
       if (editFeature) {
         // Grab updated attributes from the form.
         const updated = featureForm.getValues();
@@ -265,10 +318,10 @@ export class MapComponent implements OnInit {
             objectId = editsResult.updateFeatureResults[0].objectId;
           }
           selectFeature(objectId);
-          if (addFeatureDiv.style.display === 'block'){
+          if (addFeatureDiv.style.display === 'block') {
             toggleEditingDivs('none', 'block');
           }
-        } else if (editsResult.deleteFeatureResults.length > 0){
+        } else if (editsResult.deleteFeatureResults.length > 0) {
           toggleEditingDivs('block', 'none');
         }
       })
@@ -348,7 +401,7 @@ export class MapComponent implements OnInit {
     // Remove the feature highlight and remove attributes
     // from the feature form.
     function unselectFeature() {
-      if (highlight){
+      if (highlight) {
         highlight.remove();
       }
     }
@@ -401,5 +454,4 @@ export class MapComponent implements OnInit {
     });
 
   }
-
 }
