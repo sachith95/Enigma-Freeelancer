@@ -12,6 +12,15 @@ import { AngularEsriModule } from 'angular-esri-components';
 import { HttpModule } from '@angular/http';
 import { AuthGuard } from './shared';
 
+
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {AngularFireModule} from '@angular/fire'
+import { environment } from '../environments/environment';
+import {AngularFireDatabaseModule} from '@angular/fire/database';
+import {AngularFirestoreModule} from '@angular/fire/firestore';
+import {AngularFireAuthModule} from '@angular/fire/auth';
+import {DashboardModule} from './layout/dashboard/dashboard.module';
+
 // AoT requires an exported function for factories
 export const createTranslateLoader = (http: HttpClient) => {
     /* for development
@@ -29,6 +38,13 @@ export const createTranslateLoader = (http: HttpClient) => {
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
+        ReactiveFormsModule,
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireDatabaseModule,
+        AngularFirestoreModule, // imports firebase/firestore, only needed for database features
+        AngularFireAuthModule, AppRoutingModule, // imports firebase/auth, only needed for auth feature
+        DashboardModule,
+        
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,

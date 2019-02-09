@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
     selector: 'app-header',
@@ -9,9 +10,12 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class HeaderComponent implements OnInit {
     public pushRightClass: string;
-
-    constructor(private translate: TranslateService, public router: Router) {
-
+    public currentUserEmail:any;
+    constructor(private translate: TranslateService, public router: Router,public af: AngularFireAuth) {
+        debugger;
+        this.currentUserEmail = this.af.auth.currentUser.email;
+        
+            
         this.translate.addLangs(['en', 'fr', 'ur', 'es', 'it', 'fa', 'de', 'zh-CHS']);
         this.translate.setDefaultLang('en');
         const browserLang = this.translate.getBrowserLang();

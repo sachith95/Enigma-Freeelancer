@@ -4,12 +4,14 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { SignupRoutingModule } from './signup-routing.module';
 import { SignupComponent } from './signup.component';
+import { LoginModule } from 'src/app/login/login.module';
 
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule,
-    SignupRoutingModule
+    SignupRoutingModule,
+    LoginModule
   ],
   declarations: [SignupComponent]
 })
