@@ -1,13 +1,36 @@
 <div [@routerTransition]>
 
-  
-     <h1>TESTS</h1>
-     <!--   <div #mapViewNode></div>  <app-map id= "viewDiv"
-        [center]="mapCenter"
-        [basemap]="basemapType"
-        [zoom]="mapZoomLevel"
-        (mapLoaded)="mapLoadedEvent($event)">
-        </app-map>  
+    <div class="container dash-container">
+      <div class="row">
+       <div class="col-4">
+        <div class="search-control-item">
+         <form>
+             <div class="form-group">
+                 <label for="type">What are you hungry for?</label>
+                    <select class="form-control" (input)="setSelectedType($event)">
+                     <option selected value=''>Pick something</option>
+                     <option *ngFor="let type of cuisineTypes" [ngValue]="type">{{type}}</option>
+                    </select>
+            </div>
+                <div class="form-group">
+                <label for="zip">Enter a Zip Code</label>
+                <input type="text" name="zip" id="zip" class="form-control" >
+                </div>
+                <div class="form-group search-group">
+                     <button class="btn btn-success" (click)="search()">Search</button>
+                </div>
+                <div class="temp">
+                  
+                </div>
+         </form>
+         </div>
+      </div>
+            <div class="col-8">
+              <div #mapViewNode class ="app-map-view"> <div id="viewDiv" (mapLoaded)="mapLoadedEvent($event)">
+            </div>
+
+   
+      </div>
     </div>
--->
-</div>
+  
+  </div>
