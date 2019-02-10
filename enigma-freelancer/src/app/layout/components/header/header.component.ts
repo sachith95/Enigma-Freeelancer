@@ -10,12 +10,13 @@ import { AngularFireAuth } from 'angularfire2/auth';
 })
 export class HeaderComponent implements OnInit {
     public pushRightClass: string;
-    public currentUserEmail:any;
+    public currentUserEmail:any = '';
     constructor(private translate: TranslateService, public router: Router,public af: AngularFireAuth) {
-        debugger;
-        this.currentUserEmail = this.af.auth.currentUser.email;
-        
-            
+       // debugger;
+        if(af.auth.currentUser != null){
+            this.currentUserEmail = this.af.auth.currentUser.email;
+        }
+
         this.translate.addLangs(['en', 'fr', 'ur', 'es', 'it', 'fa', 'de', 'zh-CHS']);
         this.translate.setDefaultLang('en');
         const browserLang = this.translate.getBrowserLang();
