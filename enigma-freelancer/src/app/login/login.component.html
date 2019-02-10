@@ -17,11 +17,31 @@
                 &nbsp;
                 <a class="btn rounded-btn" [routerLink]="['/signup']">{{ 'Register' | translate }}</a>
 
+                <br>
+                <br>
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4">
+                      <button type="button" class="btn btn-danger btn-block btnCSS" (click)="tryGoogleLogin()">Login with Google</button>
+                    </div>
+                </div>
+                
+
                 <label class="error">{{errorMessage}}</label>
                 <label class="success">{{successMessage}}</label>
 
                 
             </form>
         </div>
+
+
+
+        <!-- <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+              <button type="button" class="btn btn-primary btn-block btnCSS" (click)="tryFacebookLogin()">Login with Facebook</button>
+            </div>
+        </div> -->
+
+
+
     </div>
 </div>

@@ -107,4 +107,25 @@ export class LoginComponent implements OnInit {
     onLoggedin() {
         localStorage.setItem('isLoggedin', 'true');
     }
+
+    tryFacebookLogin(){
+      debugger;
+      this.AuthService.doFacebookLogin()
+      .then(res => {
+        debugger;
+        this.router.navigate(['/dashboard']);
+      })
+    }
+
+    tryGoogleLogin(){
+      debugger;
+      this.AuthService.doGoogleLogin()
+      .then(res => {
+        debugger;
+        this.router.navigate(['/dashboard']);
+      })
+    }
+
 }
+
+
