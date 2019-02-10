@@ -1,16 +1,21 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LayoutComponent } from './layout.component';
+import { AuthGuard } from '../shared';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
     {
         path: '',
         component: LayoutComponent,
         children: [
-            { path: '', redirectTo: 'dashboard', pathMatch: 'prefix' },
-            { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
-            { path: 'charts', loadChildren: './charts/charts.module#ChartsModule' },
-            { path: 'tables', loadChildren: './tables/tables.module#TablesModule' },
+            { path: '', redirectTo: 'dashboard', pathMatch: 'prefix',canActivate: [AuthGuard]  },
+            { 
+                path: 'dashboard', 
+                component: DashboardComponent
+            },
+            { path: 'charts', loadChildren: './charts/charts.module#ChartsModule',canActivate: [AuthGuard] },
+            { path: 'tables', loadChildren: './tables/tables.module#TablesModule',canActivate: [AuthGuard] },
             // { path: 'forms', loadChildren: './form/form.module#FormModule' },
             // { path: 'bs-element', loadChildren: './bs-element/bs-element.module#BsElementModule' },
             // { path: 'grid', loadChildren: './grid/grid.module#GridModule' },
