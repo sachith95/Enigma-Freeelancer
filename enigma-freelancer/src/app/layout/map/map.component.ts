@@ -74,11 +74,8 @@ zip;
       alert('please enter a five-digit zip');
       return;
     }
+    //map.centerAt(new Point(-118.15, 33.80, new SpatialReference({wkid: 4326})));
 
-    const params = {
-      location: this.zip,
-      type: this.selectedType || 'Italian'
-    };
   }
    public AddFeature(x: Number, y: Number) {
     const  url = 'https://services9.arcgis.com/8DxVBkEZX2pin6L9/arcgis/rest/services/enigmafreelancer/FeatureServer/0/addFeatures';
@@ -129,9 +126,10 @@ zip;
       'esri/tasks/Locator',
       'esri/support/actions/ActionButton',
      'esri/widgets/BasemapGallery',
-     'esri/widgets/Legend'
+     'esri/widgets/Legend',
+     'esri/symbols/PictureMarkerSymbol'
     ]).then(([EsriMap, EsriMapView, Search, FeatureLayer, Graphic, Expand,
-      FeatureForm, FeatureTemplates, PopupTemplate, Locate, watchUtils, esriRequest, Locator, ActionButton, BasemapGallery, Legend]) => {
+      FeatureForm, FeatureTemplates, PopupTemplate, Locate, watchUtils, esriRequest, Locator, ActionButton, BasemapGallery, Legend,PictureMarkerSymbol]) => {
        const AddAttributeAction = new ActionButton({
         title: 'Add Position',
         id: 'add-addtribute',
@@ -162,7 +160,7 @@ zip;
             }]
           }
         });
-
+      
       // Set type for Map constructor properties
       const mapProperties: esri.MapProperties = {
         basemap: 'streets',
@@ -233,7 +231,94 @@ zip;
         });
       });
 
-
+      watchUtils.whenTrue(mapView, 'stationary', function() {
+        // Get the new center of the view only when view is stationary.
+        if (mapView.center) {
+          const info = '<br> <span> the view center changed. </span> x: ' +
+          mapView.center.x.toFixed(2) + ' y: ' + mapView.center.y.toFixed(2);
+        }
+  
+        // Get the new extent of the view only when view is stationary.
+        if (mapView.extent) {
+          const info = '<br> <span> the view extent changed: </span>' +
+            '<br> xmin:' + mapView.extent.xmin.toFixed(2) + ' xmax: ' +
+            mapView.extent.xmax.toFixed(
+              2) +
+            '<br> ymin:' + mapView.extent.ymin.toFixed(2) + ' ymax: ' +
+            mapView.extent.ymax.toFixed(
+              2);
+          console.log(info);
+        
+          var markerSymbol = {
+            type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+            color: [226, 119, 40],
+            outline: { // autocasts as new SimpleLineSymbol()
+              color: [255, 255, 255],
+              width: 2
+            }
+          };
+ 
+          mapView.on("drag", function(evt) {
+         //   evt.stopPropagation();
+            var screenPoint = {
+                x: evt.x,
+                y: evt.y
+            };
+            var point = {
+              type: "point", // autocasts as new Point()
+              longitude:  mapView.center.longitude,
+              latitude: mapView.center.latitude
+            };
+            var pointGraphic = new Graphic({
+              geometry: point,
+              symbol: markerSymbol
+            });
+            mapView.graphics.remove(pointGraphic);
+            mapView.graphics.add(pointGraphic)
+            console.log(evt.action);
+        
+         
+        
+   /*          mapView.hitTest(screenPoint).then(function(response) {
+                var graphic = response.results[0].graphic;
+        
+         
+        
+            if (graphic) {
+        
+         
+        
+                console.log(response.results[0].mapPoint);
+        
+         
+        
+                var newGraphic = Graphic({
+                    geometry: response.results[0].mapPoint,
+                    symbol: new PictureMarkerSymbol({
+                        url: "https://static.arcgis.com/images/Symbols/Shapes/BlackStarLargeB.png",
+                        width: "48px",
+                        height: "48px"
+                    })
+                });
+        
+         
+        
+                //mapView.graphics.remove(graphic);
+               // mapView.graphics.add(newGraphic);
+            }}); */
+        
+        });
+          var symbol =  {
+            type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
+            url: "https://static.arcgis.com/images/Symbols/Shapes/BlackStarLargeB.png",
+            width: "64px",
+            height: "64px",
+            xoffset: mapView.center.x,
+            yoffset: mapView.center.y
+          };
+        }
+  
+      });
         const locateBtn = new Locate({
           view: mapView
         });
@@ -265,25 +350,7 @@ zip;
         url: 'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer'
       });
 
-    watchUtils.whenTrue(mapView, 'stationary', function() {
-      // Get the new center of the view only when view is stationary.
-      if (mapView.center) {
-        const info = '<br> <span> the view center changed. </span> x: ' +
-        mapView.center.x.toFixed(2) + ' y: ' + mapView.center.y.toFixed(2);
-      }
 
-      // Get the new extent of the view only when view is stationary.
-      if (mapView.extent) {
-        const info = '<br> <span> the view extent changed: </span>' +
-          '<br> xmin:' + mapView.extent.xmin.toFixed(2) + ' xmax: ' +
-          mapView.extent.xmax.toFixed(
-            2) +
-          '<br> ymin:' + mapView.extent.ymin.toFixed(2) + ' ymax: ' +
-          mapView.extent.ymax.toFixed(
-            2);
-        console.log(info);
-      }
-    });
 
 
       }, (err: any) => {
