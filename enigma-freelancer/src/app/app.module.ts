@@ -44,7 +44,6 @@ export const createTranslateLoader = (http: HttpClient) => {
         AngularFirestoreModule, // imports firebase/firestore, only needed for database features
         AngularFireAuthModule, AppRoutingModule, // imports firebase/auth, only needed for auth feature
         DashboardModule,
-        
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,

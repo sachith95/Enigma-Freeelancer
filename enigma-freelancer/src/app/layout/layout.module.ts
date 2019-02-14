@@ -9,14 +9,14 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HeaderComponent } from './components/header/header.component';
 import {  DashboardModule} from './dashboard/dashboard.module';
 
-
 @NgModule({
     imports: [
         CommonModule,
         LayoutRoutingModule,
         TranslateModule,
         NgbDropdownModule,
-        DashboardModule
+        DashboardModule,
+      
     ],
     declarations: [LayoutComponent, SidebarComponent, HeaderComponent]
 })
