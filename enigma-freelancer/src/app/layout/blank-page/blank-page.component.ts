@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { routerTransition } from './../../router.animations';
+
 @Component({
-    selector: 'app-job-page',
+    selector: 'app-blank-page',
     templateUrl: './blank-page.component.html',
     styleUrls: ['./blank-page.component.scss']
 })

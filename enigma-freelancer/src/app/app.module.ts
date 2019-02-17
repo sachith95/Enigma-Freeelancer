@@ -38,7 +38,7 @@ export const createTranslateLoader = (http: HttpClient) => {
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
-        ReactiveFormsModule,
+        // ReactiveFormsModule,
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireDatabaseModule,
         AngularFirestoreModule, // imports firebase/firestore, only needed for database features

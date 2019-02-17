@@ -15,20 +15,44 @@ export class DashboardComponent implements OnInit {
         this.sliders.push(
             {
                 imagePath: 'assets/images/slider1.jpg',
-                label: 'First slide label',
+                label: '',
                 text:
-                    'abc.'
+                    ''
             },
             {
                 imagePath: 'assets/images/slider2.jpg',
-                label: 'Second slide label',
-                text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+                label: '',
+                text: ''
             },
             {
                 imagePath: 'assets/images/slider3.jpg',
-                label: 'Third slide label',
+                label: '',
                 text:
-                    'ddefrf'
+                    ''
+            },
+            {
+                imagePath: 'assets/images/freelance1.jpg',
+                label: '',
+                text:
+                    ''
+            },
+            {
+                imagePath: 'assets/images/freelance2.jpg',
+                label: '',
+                text:
+                    ''
+            },
+            {
+                imagePath: 'assets/images/freelance3.jpg',
+                label: '',
+                text:
+                    ''
+            },
+            {
+                imagePath: 'assets/images/freelance4.jpg',
+                label: '',
+                text:
+                    ''
             }
         );
 
@@ -36,10 +60,9 @@ export class DashboardComponent implements OnInit {
             {
                 id: 1,
                 type: 'success',
-                message: `Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Voluptates est animi quibusdam praesentium quam, et perspiciatis,
-                consectetur velit culpa molestias dignissimos
-                voluptatum veritatis quod aliquam! Rerum placeat necessitatibus, vitae dolorum`
+                message: `Get Work Done Faster On Enigma Freelance, With Confidence
+                
+                `
             },
             {
                 id: 2,

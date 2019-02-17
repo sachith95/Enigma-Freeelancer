@@ -19,11 +19,11 @@ export class SignupComponent implements OnInit {
     constructor(
         private translate: TranslateService,
         public AuthService: AuthService,
-        private fb: FormBuilder,
+        // private fb: FormBuilder,
         public router: Router
         ) {
 
-        this.createForm();
+        //this.createForm();
         this.translate.addLangs(['en', 'fr', 'ur', 'es', 'it', 'fa', 'de', 'zh-CHS']);
         this.translate.setDefaultLang('en');
         const browserLang = this.translate.getBrowserLang();
@@ -48,12 +48,12 @@ export class SignupComponent implements OnInit {
 
     ngOnInit() {}
 
-    createForm() {
-        this.registerForm = this.fb.group({
-          email: ['', Validators.required ],
-          password: ['',Validators.required]
-        });
-      }
+    // createForm() {
+    //     this.registerForm = this.fb.group({
+    //       email: ['', Validators.required ],
+    //       password: ['',Validators.required]
+    //     });
+    //   }
 
     tryRegister(value){
         debugger;

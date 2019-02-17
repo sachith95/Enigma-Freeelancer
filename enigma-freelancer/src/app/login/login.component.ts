@@ -28,8 +28,9 @@ export class LoginComponent implements OnInit {
     constructor(
         public AuthService:AuthService,
         private translate: TranslateService,
-        public router: Router,
-        private fb: FormBuilder
+        public router: Router
+        // ,
+        // private fb: FormBuilder
         ) {
             this.translate.addLangs(['en', 'fr', 'ur', 'es', 'it', 'fa', 'de', 'zh-CHS']);
             this.translate.setDefaultLang('en');
@@ -41,15 +42,15 @@ export class LoginComponent implements OnInit {
     successMessage:any;
 
     ngOnInit() {
-        this.createForm();
+        //this.createForm();
     }
 
-    createForm() {
-        this.loginForm = this.fb.group({
-          email: ['', Validators.required ],
-          password: ['',Validators.required]
-        });
-      }
+    // createForm() {
+    //     this.loginForm = this.fb.group({
+    //       email: ['', Validators.required ],
+    //       password: ['',Validators.required]
+    //     });
+    //   }
 
 
 
