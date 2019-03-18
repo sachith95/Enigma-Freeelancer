@@ -5,6 +5,7 @@ import { AuthGuard } from '../shared';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { JobCreationComponent } from './job-creation/job-creation.component';
 import { HomeComponent } from './home/home.component';
+import { UserComponent } from './user/user.component';
 
 
 const routes: Routes = [
@@ -24,9 +25,10 @@ const routes: Routes = [
             // { path: 'grid', loadChildren: './grid/grid.module#GridModule' },
             // { path: 'components', loadChildren: './bs-component/bs-component.module#BsComponentModule' },
             { path: 'blank-page', loadChildren: './blank-page/blank-page.module#BlankPageModule' },
-            { path: 'map', loadChildren: './map/map.module#MapModule' },
+            { path: 'map/:id', loadChildren: './map/map.module#MapModule' },
             { path: 'Job', component: JobCreationComponent },
-            { path: 'Home', component: HomeComponent }
+            { path: 'Home', component: HomeComponent },
+            { path: 'User', component: UserComponent }
         ]
     }
 ];

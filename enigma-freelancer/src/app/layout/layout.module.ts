@@ -11,6 +11,8 @@ import { HeaderComponent } from './components/header/header.component';
 import {  DashboardModule} from './dashboard/dashboard.module';
 import { JobCreationComponent } from './job-creation/job-creation.component';
 import { HomeComponent } from './home/home.component';
+import { UserComponent } from './user/user.component';
+
 
 @NgModule({
     imports: [
@@ -23,6 +25,6 @@ import { HomeComponent } from './home/home.component';
         FormsModule
       
     ],
-    declarations: [LayoutComponent, SidebarComponent, HeaderComponent,JobCreationComponent,HomeComponent]
+    declarations: [LayoutComponent, SidebarComponent, HeaderComponent,JobCreationComponent,HomeComponent, UserComponent]
 })
 export class LayoutModule {}

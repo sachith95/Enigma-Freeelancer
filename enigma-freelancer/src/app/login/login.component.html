@@ -13,7 +13,7 @@
                         <input type="password" class="form-control input-underline input-lg" id="txtPassword" placeholder="{{ 'Password' | translate }}" formControlName="password" >
                     </div>
                 </div>
-                <a class="btn rounded-btn"  (click)="tryLogin(loginForm.value)" >{{ 'Log in' | translate }}</a>
+                <a class="btn rounded-btn"  (click)="tryLogin()" >{{ 'Log in' | translate }}</a>
                 &nbsp;
                 <a class="btn rounded-btn" [routerLink]="['/signup']">{{ 'Register' | translate }}</a>
                 &nbsp;

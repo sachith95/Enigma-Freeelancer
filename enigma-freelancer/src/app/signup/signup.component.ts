@@ -55,7 +55,7 @@ export class SignupComponent implements OnInit {
     //     });
     //   }
 
-    tryRegister(value){
+    tryRegister(){
         debugger;
 
         this.email = (<HTMLInputElement>document.getElementById('txtEmail')).value;

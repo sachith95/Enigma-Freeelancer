@@ -75,7 +75,7 @@ export class LoginComponent implements OnInit {
     }
 
 
-    tryRegister(value){
+    tryRegister(){
         
     this.AuthService.doRegister(this.email,this.password)
         .then(res => {

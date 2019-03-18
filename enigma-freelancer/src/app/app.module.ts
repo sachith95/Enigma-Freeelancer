@@ -20,6 +20,8 @@ import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {DashboardModule} from './layout/dashboard/dashboard.module';
+import { FirebaseService } from './services/firebase.service';
+
 
 // AoT requires an exported function for factories
 export const createTranslateLoader = (http: HttpClient) => {
@@ -56,7 +58,7 @@ export const createTranslateLoader = (http: HttpClient) => {
         AngularEsriModule
     ],
     declarations: [AppComponent],
-    providers: [AuthGuard],
-    bootstrap: [AppComponent]
+    providers: [AuthGuard,FirebaseService],
+    bootstrap: [AppComponent],
 })
 export class AppModule {}

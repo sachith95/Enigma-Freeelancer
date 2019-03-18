@@ -12,7 +12,7 @@ import * as firebase from 'firebase/app';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthService { 
   user: Observable<firebase.User>;
   authenticated: boolean = false
   responsce: any;
@@ -107,6 +107,9 @@ export class AuthService {
   }
 
 
+  logout() {
+    this.af.auth.signOut();
+  }
 
 
 

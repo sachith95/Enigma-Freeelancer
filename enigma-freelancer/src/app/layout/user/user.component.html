@@ -1,0 +1,99 @@
+    
+    
+    
+<div class="card mb-3">
+    <div class="row no-gutters">
+      <div class="col-md-4">
+        <img src="..." class="card-img" alt="...">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+            <h4 class="card-title">Jenifer Smith</h4>
+            <h6>Administrator</h6>
+            
+                <p>Hello I’m Jenifer Smith, a leading expert in interactive and creative design.</p>
+                <p>@jenifersmith</p>
+                <p><i class="fa fa-twitter">jenifertweet</i></p>
+                <h6>
+                                  <span><i class="icon_clock_alt"></i>11:05 AM</span>
+                                  <span><i class="icon_calendar"></i>25.10.13</span>
+                                  <span><i class="icon_pin_alt"></i>NY</span>
+                              </h6>
+              
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+      <div class="card-header">
+          Edit Profile
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Profile Info</h5>
+        <form class="create-form" [formGroup]="editUserForm" novalidate (ngSubmit)="onFormSubmit()">
+            <div class="form-group">
+              <label >First Name</label>
+                <input type="text" class="form-control" id="f-name" formControlName="firstName" placeholder=" ">
+            </div>
+            <div class="form-group">
+              <label >Last Name</label>
+             
+                <input type="text" class="form-control" id="l-name" formControlName="lastName" placeholder=" ">
+              
+            </div>
+            <div class="form-group">
+              <label >About Me</label>
+              
+                <textarea name="" id="" class="form-control" cols="30" rows="5"></textarea>
+              
+            </div>
+            <div class="form-group">
+              <label >Country</label>
+             
+                <input type="text" class="form-control" id="c-name" formControlName="country" placeholder=" ">
+              
+            </div>
+            <div class="form-group">
+              <label >Birthday</label>
+             
+                <input type="text" class="form-control" id="b-day" formControlName="birthday" placeholder=" ">
+              
+            </div>
+            <div class="form-group">
+              <label >Occupation</label>
+             
+                <input type="text" class="form-control" id="occupation" formControlName="occupation" placeholder=" ">
+            
+            </div>
+            <div class="form-group">
+              <label >Contact No</label>
+ 
+                <input type="text" class="form-control" id="contactNo" formControlName="contactNo"  placeholder=" ">
+              
+            </div>
+            <div class="form-group">
+              <label >Skills</label>
+             
+                <input type="text" class="form-control" id="skills" formControlName="skills" placeholder="http://www.demowebsite.com ">
+          
+            </div>
+            <div class="form-group">
+              <label >Website URL</label>
+             
+                <input type="text" class="form-control" id="url" formControlName="websiteURL" placeholder="http://www.demowebsite.com ">
+          
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-danger">Cancel</button>
+     
+            </div>
+   </form>
+     <button type="button" class="btn btn-danger" [routerLink]="['/map',2]">Add Map Position</button>
+      </div>
+      <div class="card-footer text-muted">
+        Edited 2 days ago
+      </div>
+    </div>

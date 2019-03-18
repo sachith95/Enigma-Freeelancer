@@ -18,7 +18,7 @@
                 </a>
                 <div class="dropdown-menu-right" ngbDropdownMenu>
                     <a href="javascript:void(0)" class="dropdown-item">
-                        {{ 'Pending Task' | translate }} <span class="badge badge-info">6</span>
+                       s {{ 'Pending Task' | translate }} <span class="badge badge-info">6</span>
                     </a>
                     <a href="javascript:void(0)" class="dropdown-item">
                         {{ 'In queue' | translate }} <span class="badge badge-info"> 13</span>
@@ -38,7 +38,7 @@
                     <i class="fa fa-user"></i> {{currentUserEmail}} <b class="caret"></b>
                 </a>
                 <div class="dropdown-menu-right" ngbDropdownMenu>
-                    <a class="dropdown-item" href="javascript:void(0)">
+                    <a class="dropdown-item" [routerLink]="['/User']" [routerLinkActive]="['router-link-active']" href="javascript:void(0)">
                         <i class="fa fa-fw fa-user"></i> {{ 'Profile' | translate }}
                     </a>
                     <a class="dropdown-item" href="javascript:void(0)">
