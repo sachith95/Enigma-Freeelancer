@@ -6,30 +6,36 @@ import * as firebase from 'firebase';
 import { UserComponent } from '../layout/user/user.component';
 import { FormGroup, FormControl } from '@angular/forms';
 import { UserModule } from '../layout/user/user.module';
+import { Http } from '@angular/http';
+import { Observable } from 'rxjs';
 //import { ToastrService } from 'ngx-toastr';
 
-var userobject; 
+
+let timeStamp ;
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
-   userId:string =  firebase.auth().currentUser.uid ;
-  constructor(public db: AngularFireDatabase) {}
- // user:UserModule;
+  userId:string =  firebase.auth().currentUser.uid ;
 
- 
+  constructor(public db: AngularFireDatabase,private http: Http) {}
 
-  updateUser(userKey, value){
-   // value.nameToSearch = value.name.toLowerCase();
-  ///  return this.db.list('Users').doc(userKey).set(value);
+
+  uploadImage(image: File): any {
+    const formData = new FormData();
+    timeStamp = new Date().getTime();
+    formData.append('image', image);
+
+    return firebase.storage().ref('images/' + 'userImages/').child(this.userId).child(timeStamp.toString()).put(image);
   }
+  
+  
 
   deleteUser(userKey){
   //  return this.db.list('Users').doc(userKey).delete();
   }
 
   getUser(){
-   // this.user= new UserModule();
    return firebase.database().ref('Users/' + this.userId);
   }
 
@@ -53,17 +59,29 @@ export class FirebaseService {
       avatar: avatar
     });
   }
-   writeUserData(firstName,lastName,aboutMe,country,birthday,occupation,ContactNo,websiteURL,profilePic,skills) {
+   writeUserData(Name,Email,Address,aboutMe,country,birthday,occupation,ContactNo,profilePic,skills) {
     firebase.database().ref('Users/' + this.userId).set({
-      firstName: firstName,
-      lastName :lastName,
+      name: Name,
+      email :Email,
+      address :Address,
       aboutMe:aboutMe,
       country:country,
       birthday:birthday,
       occupation:occupation,
-      ContactNo:ContactNo,
-      websiteURL:websiteURL,
+      contactNo:ContactNo
      // profilePic:profilePic,
+     
+    },function(error){
+      if(error){
+        alert("somthing gone wrong!.");
+      }else{
+        alert("Data saved succesfuuly");
+      }
+    });
+    this.writeUserSkills(skills)
+  }
+  writeUserSkills(skills) {
+    firebase.database().ref('Users/' + this.userId+'/skills').set({
       skills:skills
     },function(error){
       if(error){
