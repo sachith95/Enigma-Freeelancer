@@ -91,4 +91,18 @@ export class FirebaseService {
       }
     });
   }
+
+  writeGeoLocationData(Latitude , Longitude) {
+    firebase.database().ref('Users/' + this.userId +'/geolocation').set({
+      latitude: Latitude,
+      longitude: Longitude
+
+    },function(error){
+      if(error){
+        alert("somthing gone wrong!.");
+      }else{
+        alert("Data saved succesfuuly");
+      }
+    });
+  }
 }

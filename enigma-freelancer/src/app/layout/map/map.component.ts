@@ -1,76 +1,39 @@
 import { Component, OnInit,  Input, Output, EventEmitter , ViewChild, ElementRef } from '@angular/core';
 import { loadModules } from 'esri-loader';
 import { routerTransition } from './../../router.animations';
+import { FirebaseService } from 'src/app/services/firebase.service';
+import { ActivatedRoute } from '@angular/router';
 import esri = __esri;
-import { Button } from 'protractor';
+import { Form, FormGroup, FormControl } from '@angular/forms';
 declare var $: any;
 
-
+let latitude= 0.0;
+let longitude =0.0;
 @Component({
   selector: 'app-map',
-  template: `<div [@routerTransition]>
- <div class="container dash-container">
-    <div class="row">
-     <div class="col-4">
-<div class="search-control-item">
-  <form>
-    <div class="form-group">
-      <label for="Search">Enter a Zip Code</label>
-      <input type="text" name="zip" id="zip" class="form-control" [(ngModel)]="zip">
-    </div>
-    <div class="form-group search-group">
-      <button class="btn btn-success" (click)="search()">Search</button>
-    </div>
-  </form>
-</div>
-
-     <div class="form-group">
-     <label for="type">Type</label>
-     <select class="form-control" (input)="setSelectedType($event)">
-         <option selected value=2>Employeer</option>
-         <option selected value=1>Employee</option>
-       </select>
-      <div class="search-control-item">
-      <label for="name">Enter User Id</label>
-      <input type="text" class="form-control" placeholder="Silva" name="user" id="userId" [(ngModel)]="userId">
-      <label for="jobType">Enter Job Type</label>
-      <input type="text" class="form-control" placeholder="Mechanic" name="jobType" id="jobType" [(ngModel)]="jobType">
-      <label for="detail">Detail</label>
-      <input type="text" class="form-control" placeholder="Motor,mostyly japan cars" name="detail" id="detail" [(ngModel)]="detail">
-      <br/>
-      <button class="btn btn-primary"  (click)="AddFeature(10, 5)">Add</button>
-      </div>
-       </div>
-    </div>
-          <div class="col-8">
-            <div #mapViewNode class ="app-map-view"> <div id="viewDiv" (mapLoaded)="mapLoadedEvent($event)">
-          </div>
-    </div>
-  </div>
-</div>`,
+  templateUrl: './map.component.html',
   styleUrls: ['./map.component.css'],
   animations: [routerTransition()]
 })
+
+
 export class MapComponent implements OnInit {
-   constructor() { }
-private id:number;
-private sub:any;
-   
-  // ngOnInit() {
-  //   // this.sub = this.route.params.subscribe(params => {
-  //   //    this.id = +params['id']; // (+) converts string 'id' to a number
+  name: string;
+  job: string;
+  UserForm: FormGroup;
+   constructor(public firebaseService: FirebaseService,private route: ActivatedRoute) { }
 
-  //   //    // In a real app: dispatch action to load the details here.
-  //   // });
-  // }
+    private id:number;
+    private sub:any;
+  selectedType: Number = 0;
+  userId;
+  jobType;
+  empoyeer;
+  employee;
+  zip;
 
-selectedType: Number = 0;
-userId;
-jobType;
-empoyeer;
-employee;
-zip;
-   @Output() mapLoaded = new EventEmitter<boolean>();
+   @Output() 
+   mapLoaded = new EventEmitter<boolean>();
 
    // this is needed to be able to create the MapView at the DOM element in this component
    @ViewChild('mapViewNode') private mapViewEl: ElementRef;
@@ -85,6 +48,10 @@ zip;
       return;
     }
     //map.centerAt(new Point(-118.15, 33.80, new SpatialReference({wkid: 4326})));
+
+  }
+  saveMapPosition(){
+    this.firebaseService.writeGeoLocationData(latitude , longitude);
 
   }
    public AddFeature(x: Number, y: Number) {
@@ -119,13 +86,33 @@ zip;
         console.log(error);
       });
   }
-    ngOnInit() {
+  createForm() {
+    this.UserForm = new FormGroup({
+      name: new FormControl(''),  
+      occupation: new FormControl('')
+    });
 
+  }
+    ngOnInit() {
+      this.createForm();
+      this.route.queryParamMap.subscribe(params => {
+        this.id = +params.get('id'); // (+) converts string 'id' to a number
+        this.name = params.get('name');
+        this.job = params.get('job');
+      
+        console.log( this.job);
+       
+        // In a real app: dispatch action to load the details here.
+     });
+
+     this.UserForm.patchValue({ name:this.name });
+     this.UserForm.patchValue({ occupation:this.job });
     loadModules([
       'esri/Map',
       'esri/views/MapView', 'esri/widgets/Search',
       'esri/layers/FeatureLayer',
       'esri/Graphic',
+      'esri/layers/GraphicsLayer',
       'esri/widgets/Expand',
       'esri/widgets/FeatureForm',
       'esri/widgets/FeatureTemplates',
@@ -138,7 +125,7 @@ zip;
      'esri/widgets/BasemapGallery',
      'esri/widgets/Legend',
      'esri/symbols/PictureMarkerSymbol'
-    ]).then(([EsriMap, EsriMapView, Search, FeatureLayer, Graphic, Expand,
+    ]).then(([EsriMap, EsriMapView, Search, FeatureLayer, Graphic,GraphicsLayer, Expand,
       FeatureForm, FeatureTemplates, PopupTemplate, Locate, watchUtils, esriRequest, Locator, ActionButton, BasemapGallery, Legend,PictureMarkerSymbol]) => {
        const AddAttributeAction = new ActionButton({
         title: 'Add Position',
@@ -201,6 +188,8 @@ zip;
       const basemapWidet = new BasemapGallery({
         view: mapView
       });
+      const graphicsLayer = new GraphicsLayer({id:'pointLayer'});
+      map.add(graphicsLayer);
       const bgExpand = new Expand({
         view: mapView,
         content: basemapWidet,
@@ -279,43 +268,16 @@ zip;
               longitude:  mapView.center.longitude,
               latitude: mapView.center.latitude
             };
+            latitude =  mapView.center.longitude;
+            longitude = mapView.center.latitude;
             var pointGraphic = new Graphic({
               geometry: point,
               symbol: markerSymbol
             });
-            mapView.graphics.remove(pointGraphic);
-            mapView.graphics.add(pointGraphic)
+            graphicsLayer.removeAll ();
+            graphicsLayer.graphics.add(pointGraphic)
             console.log(evt.action);
-        
-         
-        
-   /*          mapView.hitTest(screenPoint).then(function(response) {
-                var graphic = response.results[0].graphic;
-        
-         
-        
-            if (graphic) {
-        
-         
-        
-                console.log(response.results[0].mapPoint);
-        
-         
-        
-                var newGraphic = Graphic({
-                    geometry: response.results[0].mapPoint,
-                    symbol: new PictureMarkerSymbol({
-                        url: "https://static.arcgis.com/images/Symbols/Shapes/BlackStarLargeB.png",
-                        width: "48px",
-                        height: "48px"
-                    })
-                });
-        
-         
-        
-                //mapView.graphics.remove(graphic);
-               // mapView.graphics.add(newGraphic);
-            }}); */
+      
         
         });
           var symbol =  {
@@ -340,7 +302,7 @@ zip;
         });
 
       mapView.ui.add(searchWidget, {
-        position: 'top-left',
+        position: 'top-right',
         index: 0
        });
        mapView.ui.add(legend, {

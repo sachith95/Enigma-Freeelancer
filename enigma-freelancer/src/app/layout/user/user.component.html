@@ -16,16 +16,16 @@
       </div>
       <div class="col-md-8">
         <div class="card-body">
-            <h4 class="card-title">Jenifer Smith</h4>
-            <h6>Administrator</h6>
+            <h4 class="card-title">{{name}}</h4>
+            <h6>{{occupation}}</h6>
             
-                <p>Hello I’m Jenifer Smith, a leading expert in interactive and creative design.</p>
-                <p>@jenifersmith</p>
-                <p><i class="fa fa-twitter">jenifertweet</i></p>
+                <p>{{aboutMe}}</p>
+                <p>@{{name}}</p>
+                <p><i class="fa fa-twitter">{{name}}enigma</i></p>
                 <h6>
-                                  <span><i class="icon_clock_alt"></i>11:05 AM</span>
-                                  <span><i class="icon_calendar"></i>25.10.13</span>
-                                  <span><i class="icon_pin_alt"></i>NY</span>
+                                  <span><i class="fa fa-clock"></i> {{today | date:'shortTime'}}</span><br/>
+                                  <span><i class="fa fa-calendar-alt"></i>{{today | date:'fullDate'}}</span><br/>
+                                  <span><i class="fas fa-map-marker-alt"></i>NY</span>
                               </h6>
               
         </div>
@@ -35,10 +35,9 @@
 
   <div class="card">
       <div class="card-header">
-          Edit Profile
+          Edit Profile Info
       </div>
       <div class="card-body">
-        <h5 class="card-title">Profile Info</h5>
         <form class="create-form" [formGroup]="editUserForm" novalidate (ngSubmit)="onFormSubmit()">
             <div class="form-group">
               <label >First Name</label>
@@ -95,10 +94,10 @@
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Save</button>
                 <button type="button" class="btn btn-danger">Cancel</button>
-     
+                <button type="button" class="btn btn-danger"  (click)="nextPage()">Add Map Position</button>
             </div>
    </form>
-     <button type="button" class="btn btn-danger" [routerLink]="['/map',2]">Add Map Position</button>
+    
       </div>
       <div class="card-footer text-muted">
         Edited 2 days ago

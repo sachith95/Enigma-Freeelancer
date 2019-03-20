@@ -6,18 +6,23 @@ import * as firebase from 'firebase';
 import { ReactiveFormsModule } from "@angular/forms";
 import { AngularFireDatabase } from '@angular/fire/database';
 import { UserModule } from './user.module';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ajax } from 'rxjs/ajax';
 
 
 class ImageSnippet {
   constructor(public src: string, public file: File) {}
 }
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss']
 })
 export class UserComponent implements OnInit {
-
+  today: number = Date.now();
   userName: string;
   name: string;
   address: string;
@@ -58,13 +63,19 @@ export class UserComponent implements OnInit {
               private db: AngularFireDatabase,
               private route: ActivatedRoute,
               private router: Router,
-              private fb: FormBuilder) { }
+              private fb: FormBuilder,
+              private http:HttpClient) { }
 
   ngOnInit() {
     this.createForm();
     this.getuser();
-
+    this.getLocation();
   }
+  nextPage() {
+    this.router.navigate(['/map'], { queryParams: {id:'2',name:this.editUserForm.get('name').value,job:this.editUserForm.get('occupation').value } });
+  }
+
+
    processFile() {
    
     const reader = new FileReader();
@@ -126,6 +137,29 @@ export class UserComponent implements OnInit {
 
   editUser(): void {
     this.firebaseService.writeUserData(this.name, this.email, this.address,this.aboutMe, this.country, this.birthday, this.occupation, this.contactNo, this.profilePic, this.skills);
+  }
+  getLocation(): void{
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position)=>{
+          const longitude = position.coords.longitude;
+          const latitude = position.coords.latitude;
+          this.callApi(longitude, latitude);
+        });
+    } else {
+       console.log("No support for geolocation")
+    }
+  }
+
+  callApi(Longitude: number, Latitude: number){
+    const url = `https://services9.arcgis.com/8DxVBkEZX2pin6L9/arcgis/rest/services/World/GeocodeServer/reverseGeocode?location=${Longitude},${Latitude}`;
+    let loc;
+
+
+    // Create an Observable that will create an AJAX request
+    const apiData = ajax(url);
+    // Subscribe to create the request
+    apiData.subscribe(res => console.log(res.status, res.response));
+  
   }
 
 }

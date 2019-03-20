@@ -1,36 +1,54 @@
-<div [@routerTransition]>
-
+<!--
     <div class="container dash-container">
       <div class="row">
-       <div class="col-4">
-        <div class="search-control-item">
-         <form>
-             <div class="form-group">
-                 <label for="type">What are you hungry for?</label>
-                    <select class="form-control" (input)="setSelectedType($event)">
-                     <option selected value=''>Pick something</option>
-                     <option *ngFor="let type of cuisineTypes" [ngValue]="type">{{type}}</option>
-                    </select>
-            </div>
-                <div class="form-group">
-                <label for="zip">Enter a Zip Code</label>
-                <input type="text" name="zip" id="zip" class="form-control" >
-                </div>
-                <div class="form-group search-group">
-                     <button class="btn btn-success" (click)="search()">Search</button>
-                </div>
-                <div class="temp">
-                  
-                </div>
-         </form>
-         </div>
-      </div>
-            <div class="col-8">
-              <div #mapViewNode class ="app-map-view"> <div id="viewDiv" (mapLoaded)="mapLoadedEvent($event)">
-            </div>
+         <div class="col-4">
 
+                     
+          </div>
+
+
+              <label for="type">Type</label>
+              <select class="form-control" (input)="setSelectedType($event)">
+                <option selected value=2>Employeer</option>
+                <option selected value=1>Employee</option>
+              </select>
    
+   
+        
+        </div>
       </div>
-    </div>
-  
+  </div>
+-->
+<div [@routerTransition]>
+    <div class="row">
+        <div class="col-4">
+            <div class="container">
+                <h1>Lets' Add you to the WORLD</h1>
+                <form  [formGroup]="UserForm" novalidate (ngSubmit)="onFormSubmit()">
+                  <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name"  formControlName="name">
+                  </div>
+            
+                  <div class="form-group">
+                    <label for="alterEgo">Occupation</label>
+                    <input type="text" class="form-control" id="occupation"  formControlName="occupation">
+                  </div>
+                  <div class="form-group">
+                    <label for="type">Type</label>
+                    <select class="form-control" (input)="setSelectedType($event)">
+                      <option selected value=2>Employeer</option>
+                      <option selected value=1>Employee</option>
+                    </select>
+                  </div>
+                  <button type="submit" class="btn btn-success">Add To the MAP</button>
+            
+                </form>
+            </div>
+          </div>
+            <div class="col-8">
+                <div #mapViewNode class ="app-map-view"> <div id="viewDiv" (mapLoaded)="mapLoadedEvent($event)">
+            </div>
+        
+     </div>
   </div>
