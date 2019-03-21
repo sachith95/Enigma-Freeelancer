@@ -1,30 +1,11 @@
-<!--
-    <div class="container dash-container">
-      <div class="row">
-         <div class="col-4">
-
-                     
-          </div>
 
 
-              <label for="type">Type</label>
-              <select class="form-control" (input)="setSelectedType($event)">
-                <option selected value=2>Employeer</option>
-                <option selected value=1>Employee</option>
-              </select>
-   
-   
-        
-        </div>
-      </div>
-  </div>
--->
 <div [@routerTransition]>
     <div class="row">
         <div class="col-4">
             <div class="container">
                 <h1>Lets' Add you to the WORLD</h1>
-                <form  [formGroup]="UserForm" novalidate (ngSubmit)="onFormSubmit()">
+                <form class="create-form" [formGroup]="UserForm">
                   <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" class="form-control" id="name"  formControlName="name">
@@ -36,19 +17,24 @@
                   </div>
                   <div class="form-group">
                     <label for="type">Type</label>
-                    <select class="form-control" (input)="setSelectedType($event)">
-                      <option selected value=2>Employeer</option>
-                      <option selected value=1>Employee</option>
+                    <select class="form-control" (input)="setSelectedType($event)" formControlName="type">
+                      <option selected="selected" selected value='employee'>Employee</option>
+                      <option selected value='employer'>Employer</option>
                     </select>
                   </div>
-                  <button type="submit" class="btn btn-success">Add To the MAP</button>
+                  <button type="button" class="btn btn-success"   (click) ="saveMapPosition()">Add To the MAP</button>
             
                 </form>
-            </div>
-          </div>
+           </div>
+        </div>
             <div class="col-8">
-                <div #mapViewNode class ="app-map-view"> <div id="viewDiv" (mapLoaded)="mapLoadedEvent($event)">
-            </div>
-        
+                 <div #mapViewNode class ="app-map-view"> 
+                  <div id="viewDiv" (mapLoaded)="mapLoadedEvent($event)"> </div>
+                  <div id="infoDiv2">
+                      <button  class="esri-component esri-widget esri-interactive" type="button" id="label-btn" value="Show" title="show map data" (click) ="createGraphices()"></button> 
+                      
+                    </div>
+                 </div>
+             </div>     
      </div>
-  </div>
+</div>

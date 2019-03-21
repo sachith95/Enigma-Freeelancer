@@ -33,12 +33,14 @@ export class UserComponent implements OnInit {
   email: string;
   contactNo: string;
   websiteURL: string;
-  profilePic: string;
+  type: string;
   skills: string;
   editUserForm: FormGroup;
   selectedFile: ImageSnippet;
   public imagePath;
   imgURL: any;
+  loadProfilePic:string;
+  profilePicture ='https://firebasestorage.googleapis.com/v0/b/enigma-20605.appspot.com/o/defaultpic.jpg?alt=media&token=d9696697-92aa-4e15-b531-77c4f2ef1157';
   public message: string;
   file: File;
  
@@ -70,6 +72,7 @@ export class UserComponent implements OnInit {
     this.createForm();
     this.getuser();
     this.getLocation();
+    this.imgURL = this.profilePicture;
   }
   nextPage() {
     this.router.navigate(['/map'], { queryParams: {id:'2',name:this.editUserForm.get('name').value,job:this.editUserForm.get('occupation').value } });
@@ -101,6 +104,7 @@ export class UserComponent implements OnInit {
       this.editUserForm.patchValue({ country: snapshot.val().country });
       this.editUserForm.patchValue({ ContactNo: snapshot.val().contactNo });
       this.editUserForm.patchValue({ birthday: snapshot.val().birthday });
+      this.profilePicture = snapshot.val().profilePic; 
     }, function (error) {
       console.log("error" + error.code);
     });
@@ -116,7 +120,6 @@ export class UserComponent implements OnInit {
       birthday: new FormControl(''),
       occupation: new FormControl(''),
       contactNo: new FormControl(''),
-      profilePic: new FormControl('test'),
       skills: new FormControl('')
     });
 
@@ -136,7 +139,7 @@ export class UserComponent implements OnInit {
   }
 
   editUser(): void {
-    this.firebaseService.writeUserData(this.name, this.email, this.address,this.aboutMe, this.country, this.birthday, this.occupation, this.contactNo, this.profilePic, this.skills);
+    this.firebaseService.writeUserData(this.name, this.email, this.address,this.aboutMe, this.country, this.birthday, this.occupation, this.contactNo,this.skills,this.profilePicture);
   }
   getLocation(): void{
     if (navigator.geolocation) {

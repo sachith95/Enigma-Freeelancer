@@ -5,10 +5,13 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 import { ActivatedRoute } from '@angular/router';
 import esri = __esri;
 import { Form, FormGroup, FormControl } from '@angular/forms';
+
 declare var $: any;
 
 let latitude= 0.0;
 let longitude =0.0;
+let mapView: esri.MapView
+let map: esri.Map;
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -18,20 +21,20 @@ let longitude =0.0;
 
 
 export class MapComponent implements OnInit {
-  name: string;
-  job: string;
-  UserForm: FormGroup;
-   constructor(public firebaseService: FirebaseService,private route: ActivatedRoute) { }
 
-    private id:number;
-    private sub:any;
-  selectedType: Number = 0;
+   constructor(public firebaseService: FirebaseService,private route: ActivatedRoute) { }
+   name: string;
+   job: string;
+   UserForm: FormGroup;
+  private id:number;
+  private sub:any;
+  selectedType: string= 'employee';
   userId;
   jobType;
   empoyeer;
   employee;
   zip;
-
+  labelButton;
    @Output() 
    mapLoaded = new EventEmitter<boolean>();
 
@@ -39,6 +42,7 @@ export class MapComponent implements OnInit {
    @ViewChild('mapViewNode') private mapViewEl: ElementRef;
   setSelectedType(event) {
     this.selectedType = event.target.value;
+    this.updateUserType(this.selectedType);
     console.log('select type', this.selectedType);
   }
   search ()  {
@@ -48,60 +52,30 @@ export class MapComponent implements OnInit {
       return;
     }
     //map.centerAt(new Point(-118.15, 33.80, new SpatialReference({wkid: 4326})));
-
   }
+ 
   saveMapPosition(){
     this.firebaseService.writeGeoLocationData(latitude , longitude);
+  }
 
-  }
-   public AddFeature(x: Number, y: Number) {
-    const  url = 'https://services9.arcgis.com/8DxVBkEZX2pin6L9/arcgis/rest/services/enigmafreelancer/FeatureServer/0/addFeatures';
-    if (this.selectedType = 1) {
-      this.empoyeer = false;
-      this.employee = true;
-    } else if (this.selectedType = 2) {
-      this.empoyeer = true;
-      this.employee = false;
-    }
-    const feature = {
-      'geometry': { 'x': x, 'y': y},
-      'attributes': {
-        'userid': this.userId,
-        'jobtype': this.jobType,
-        'employeer': this.empoyeer,
-        'employee': this.employee
-      },
-      'spatialReference': {
-        'wkid': '4326'
-      }
-    };
-    $.post(url, {
-      features: JSON.stringify([feature]),
-      f: 'json'
-    })
-      .done(function (results: any) {
-        console.log(results);
-      })
-      .fail(function (error: any) {
-        console.log(error);
-      });
-  }
   createForm() {
     this.UserForm = new FormGroup({
       name: new FormControl(''),  
-      occupation: new FormControl('')
+      occupation: new FormControl(''),
+      type: new FormControl('')
     });
 
   }
+  updateUserType(type): void {
+    this.firebaseService.writeUserType(type);
+  }
+
     ngOnInit() {
       this.createForm();
       this.route.queryParamMap.subscribe(params => {
         this.id = +params.get('id'); // (+) converts string 'id' to a number
         this.name = params.get('name');
-        this.job = params.get('job');
-      
-        console.log( this.job);
-       
+        this.job = params.get('job');      
         // In a real app: dispatch action to load the details here.
      });
 
@@ -114,19 +88,16 @@ export class MapComponent implements OnInit {
       'esri/Graphic',
       'esri/layers/GraphicsLayer',
       'esri/widgets/Expand',
-      'esri/widgets/FeatureForm',
-      'esri/widgets/FeatureTemplates',
-      'esri/PopupTemplate',
       'esri/widgets/Locate',
       'esri/core/watchUtils',
-      'esri/request',
       'esri/tasks/Locator',
       'esri/support/actions/ActionButton',
-     'esri/widgets/BasemapGallery',
-     'esri/widgets/Legend',
-     'esri/symbols/PictureMarkerSymbol'
+      'esri/widgets/BasemapGallery',
+      'esri/widgets/Legend',
+      'esri/symbols/PictureMarkerSymbol',
+      "esri/geometry/Point"
     ]).then(([EsriMap, EsriMapView, Search, FeatureLayer, Graphic,GraphicsLayer, Expand,
-      FeatureForm, FeatureTemplates, PopupTemplate, Locate, watchUtils, esriRequest, Locator, ActionButton, BasemapGallery, Legend,PictureMarkerSymbol]) => {
+      Locate, watchUtils,  Locator, ActionButton, BasemapGallery, Legend,PictureMarkerSymbol,Point]) => {
        const AddAttributeAction = new ActionButton({
         title: 'Add Position',
         id: 'add-addtribute',
@@ -137,25 +108,7 @@ export class MapComponent implements OnInit {
       const featureLayer = new FeatureLayer({
           url: 'https://services9.arcgis.com/8DxVBkEZX2pin6L9/arcgis/rest/services/enigmafreelancer/FeatureServer',
           outFields: ['*'],
-          popupEnabled: true,
-          id: 'incidentsLayer',
-          popupTemplate: {
-            title: '{userid}',
-            actions: [{
-              id: 'find-brewery',
-              image: 'beer.png',
-              title: 'Brewery Info'
-            }],
-            content: [{
-              type: 'fields',
-              fieldInfos: [{
-                fieldName: 'userid'
-              }, {
-                fieldName: 'jobtype',
-                label: 'address'
-              }]
-            }]
-          }
+          popupEnabled: true
         });
       
       // Set type for Map constructor properties
@@ -164,7 +117,7 @@ export class MapComponent implements OnInit {
         layers : featureLayer
       };
 
-      const map: esri.Map = new EsriMap(mapProperties);
+      map  = new EsriMap(mapProperties);
 
        // Set type for MapView constructor properties
        const mapViewProperties: esri.MapViewProperties = {
@@ -174,9 +127,8 @@ export class MapComponent implements OnInit {
         map: map
       };
 
-      const mapView: esri.MapView = new EsriMapView(mapViewProperties);
-
-
+       mapView  = new EsriMapView(mapViewProperties);
+     
       mapView.when(() => {
         // All the resources in the MapView and the map have loaded. Now execute additional processes
         this.mapLoaded.emit(true);
@@ -258,11 +210,8 @@ export class MapComponent implements OnInit {
           };
  
           mapView.on("drag", function(evt) {
-         //   evt.stopPropagation();
-            var screenPoint = {
-                x: evt.x,
-                y: evt.y
-            };
+
+    
             var point = {
               type: "point", // autocasts as new Point()
               longitude:  mapView.center.longitude,
@@ -300,7 +249,7 @@ export class MapComponent implements OnInit {
           console.log('EVENTssc', locateEvent.Position.coords);
          // AddFeature(locateEvent.coords.latitude, locateEvent.coords.longitude);
         });
-
+        
       mapView.ui.add(searchWidget, {
         position: 'top-right',
         index: 0

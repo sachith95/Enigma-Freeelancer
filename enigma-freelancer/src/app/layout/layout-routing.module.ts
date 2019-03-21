@@ -6,6 +6,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { JobCreationComponent } from './job-creation/job-creation.component';
 import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
+import { MapViewComponent } from './map-view/map-view.component';
 
 
 const routes: Routes = [
@@ -28,7 +29,9 @@ const routes: Routes = [
             { path: 'map', loadChildren: './map/map.module#MapModule' },
             { path: 'Job', component: JobCreationComponent },
             { path: 'Home', component: HomeComponent },
-            { path: 'User', component: UserComponent }
+            { path: 'User', component: UserComponent },
+            { path: 'mapView', component: MapViewComponent },
+            
         ]
     }
 ];

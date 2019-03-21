@@ -12,6 +12,7 @@ import {  DashboardModule} from './dashboard/dashboard.module';
 import { JobCreationComponent } from './job-creation/job-creation.component';
 import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
+import { MapViewComponent } from './map-view/map-view.component';
 
 
 @NgModule({
@@ -25,6 +26,6 @@ import { UserComponent } from './user/user.component';
         FormsModule
       
     ],
-    declarations: [LayoutComponent, SidebarComponent, HeaderComponent,JobCreationComponent,HomeComponent, UserComponent]
+    declarations: [LayoutComponent, SidebarComponent, HeaderComponent,JobCreationComponent,HomeComponent, UserComponent, MapViewComponent]
 })
 export class LayoutModule {}

@@ -12,6 +12,9 @@ import { Observable } from 'rxjs';
 
 
 let timeStamp ;
+
+let picUrl = null;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -22,15 +25,28 @@ export class FirebaseService {
 
 
   uploadImage(image: File): any {
+    debugger
     const formData = new FormData();
     timeStamp = new Date().getTime();
     formData.append('image', image);
-
-    return firebase.storage().ref('images/' + 'userImages/').child(this.userId).child(timeStamp.toString()).put(image);
-  }
-  
-  
-
+     firebase.storage().ref('images/' + 'userImages/').child(this.userId).child(timeStamp.toString()).put(image).then((uploadSnapshot: firebase.storage.UploadTaskSnapshot)=>{
+      uploadSnapshot.ref.getDownloadURL().then((downloadURL) => {
+        let updates = {}; 
+        picUrl = downloadURL;
+         updates['profilePic'] = picUrl;
+         firebase.database().ref('Users/'+this.userId).update(updates),function(error){
+          if(error){
+            alert("somthing gone wrong!.");
+          }else{
+            alert("Data saved succesfuuly");
+          }
+        };
+         console.log(downloadURL);
+    })
+     })
+       
+ }
+ 
   deleteUser(userKey){
   //  return this.db.list('Users').doc(userKey).delete();
   }
@@ -38,6 +54,9 @@ export class FirebaseService {
   getUser(){
    return firebase.database().ref('Users/' + this.userId);
   }
+  getUserslocations(){
+    return firebase.database().ref('Geolocation/');
+   }
 
   searchUsers(searchValue){
    // return this.db.list('Users',ref => ref.where('nameToSearch', '>=', searchValue)
@@ -59,7 +78,18 @@ export class FirebaseService {
       avatar: avatar
     });
   }
-   writeUserData(Name,Email,Address,aboutMe,country,birthday,occupation,ContactNo,profilePic,skills) {
+  writeUserType(type) {
+    firebase.database().ref('Users/' + this.userId+'/type').set({
+      type:type
+    },function(error){
+      if(error){
+        alert("somthing gone wrong!.");
+      }else{
+        alert("Data saved succesfuuly");
+      }
+    });
+  }
+   writeUserData(Name,Email,Address,aboutMe,country,birthday,occupation,ContactNo,skills,profilePic) {
     firebase.database().ref('Users/' + this.userId).set({
       name: Name,
       email :Email,
@@ -68,8 +98,8 @@ export class FirebaseService {
       country:country,
       birthday:birthday,
       occupation:occupation,
-      contactNo:ContactNo
-     // profilePic:profilePic,
+      contactNo:ContactNo,
+      profilePic:profilePic
      
     },function(error){
       if(error){
@@ -93,7 +123,7 @@ export class FirebaseService {
   }
 
   writeGeoLocationData(Latitude , Longitude) {
-    firebase.database().ref('Users/' + this.userId +'/geolocation').set({
+    firebase.database().ref('Geolocation/' + this.userId).set({
       latitude: Latitude,
       longitude: Longitude
 
