@@ -8,7 +8,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { UserModule } from '../layout/user/user.module';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs';
-//import { ToastrService } from 'ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
 
 
 let timeStamp ;

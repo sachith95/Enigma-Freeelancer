@@ -6,10 +6,10 @@
       <div class="col-md-4">
 
          
-    <span style="color:red;" *ngIf="message">{{message}}</span>
+    <span style="color:red;" *ngIf="message">{{message}}</span> 
+    <img [src]="profilePicture" height="200" class="img" >
     <input #file type="file" accept='image/*' (change)="preview(file.files)" />
-    <img [src]="profilePicture" height="200" >
-     <button class="btn btn-success"  (click) = "processFile()">Upload</button>
+    <button class="btn btn-success"  (click) = "processFile()">Upload</button>
             
 
   
