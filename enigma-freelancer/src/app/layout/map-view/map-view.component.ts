@@ -3,7 +3,7 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 import { loadModules } from 'esri-loader';
 import esri = __esri;
 
-
+let sceneView: esri.SceneView
 let mapView: esri.MapView
 let map: esri.Map;
 @Component({
@@ -17,14 +17,30 @@ export class MapViewComponent implements OnInit {
 
   ngOnInit() {
     loadModules([ 'esri/Map',
-      'esri/views/MapView',"esri/geometry/Point", "esri/Graphic",
+      'esri/views/MapView', 'esri/views/SceneView',"esri/geometry/Point", "esri/Graphic",
        'esri/layers/GraphicsLayer','esri/widgets/Search', 'esri/widgets/BasemapGallery', 'esri/widgets/Expand', 'esri/widgets/Locate', "esri/PopupTemplate",     
-    ]).then(([EsriMap, EsriMapView,Point,Graphic,GraphicsLayer,Search,BasemapGallery,Expand,Locate,PopupTemplate])=>{
+    ]).then(([EsriMap, EsriMapView,EsriSceneView,Point,Graphic,GraphicsLayer,Search,BasemapGallery,Expand,Locate,PopupTemplate])=>{
+      var point;
+      var pointGraphic;
+      var occupation:string="TEST";
+      var aboutME:string="test";
 
+      function getuserData(key){
+        this.firebaseService.getUserData(key).once("value", (snapshot) => {
+            snapshot.forEach(function(childDataSnapshot) {
+              var childDatasanp = childDataSnapshot.val();
+               occupation = childDatasanp.occupation;
+            });
+          });
+      }
       const mapProperties: esri.MapProperties = {
         basemap: 'streets'
       };
-
+      var template = new PopupTemplate({
+        title: occupation ,
+        content: aboutME
+      });
+     
       map  = new EsriMap(mapProperties);
       const mapViewProperties: esri.MapViewProperties = {
         container: 'viewDiv',
@@ -33,7 +49,7 @@ export class MapViewComponent implements OnInit {
         map: map
       };
 
-      mapView  = new EsriMapView(mapViewProperties);
+      mapView  = new EsriSceneView(mapViewProperties);
       const basemapWidet = new BasemapGallery({
         view: mapView
       });
@@ -91,11 +107,14 @@ export class MapViewComponent implements OnInit {
 
           // key will be "ada" the first time and "alan" the second time
           var key = childSnapshot.key;
+         // getuserData(key);
+          
           // childData will be the actual contents of the child
           var childData = childSnapshot.val();
+          console.log('key:',key);
           console.log(childData.latitude);
           console.log(childData.longitude)
-          var point = {
+           point = {
             type: "point", // autocasts as new Point()
             longitude:childData.latitude,
             latitude: childData.longitude
@@ -104,9 +123,10 @@ export class MapViewComponent implements OnInit {
           //   longitude:childData.longitude,
           //   latitude: childData.latitude
           // });
-          var pointGraphic = new Graphic({
+           pointGraphic = new Graphic({
             geometry: point,
-            symbol: markerSymbol
+            symbol: markerSymbol,
+            popupTemplate: template
           });
           //allObjects.push (pointGraphic);
            graphicsLayer.add(pointGraphic);
@@ -114,8 +134,12 @@ export class MapViewComponent implements OnInit {
       
       });
        map.add(graphicsLayer);
+    
       });
     });
+
+    
+
     }
   
 

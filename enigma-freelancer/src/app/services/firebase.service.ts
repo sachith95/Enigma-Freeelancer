@@ -54,6 +54,9 @@ export class FirebaseService {
   getUser(){
    return firebase.database().ref('Users/' + this.userId);
   }
+  getUserData(userkey){
+    return firebase.database().ref('Users/' + userkey);
+   }
   getUserslocations(){
     return firebase.database().ref('Geolocation/');
    }

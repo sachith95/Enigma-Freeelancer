@@ -1,7 +1,7 @@
 <nav class="sidebar" [ngClass]="{sidebarPushRight: isActive, collapsed: collapsed}">
     <div class="list-group">
             <a [routerLink]="['/blank-page']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-                <i class="fa fa-file-o"></i>&nbsp;
+                <i class="fas fa-home"></i>&nbsp;
                 <span>{{ 'Home' | translate }}</span>
             </a>
 
@@ -11,15 +11,14 @@
         <span>{{ 'Dashboard' | translate }}</span>
         </a> -->
         <a [routerLink]="['/Home']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-file-o"></i>&nbsp;
+            <i class="fas fa-briefcase"></i>&nbsp;
             <span>{{ 'Job Details' | translate }}</span>
         </a>
         <a [routerLink]="['/Job']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-file-o"></i>&nbsp;
+            <i class="fab fa-stack-overflow"></i>&nbsp;
             <span>{{ 'Jobs' | translate }}</span>
         </a>        
 
-        
         <!-- <a [routerLink]="['/charts']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-bar-chart-o"></i>&nbsp;
             <span>{{ 'Charts' | translate }}</span>
@@ -28,15 +27,14 @@
             <i class="fa fa-fw fa-table"></i>&nbsp;
             <span>{{ 'Tables' | translate }}</span>
         </a> -->
-       
 
 
-        <a [routerLink]="['/map']"  [queryParams]="{id:1}"[routerLinkActive]="['router-link-active']" class="list-group-item">
+        <!-- <a [routerLink]="['/map']"  [queryParams]="{id:1}"[routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-file-o"></i>&nbsp;
             <span>{{ 'Map' | translate }}</span>
-        </a>
+        </a> -->
         <a [routerLink]="['/mapView']"[routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-file-o"></i>&nbsp;
+            <i class="fas fa-globe-americas"></i>&nbsp;
             <span>{{ 'Map' | translate }}</span>
         </a>
 <!-- 
