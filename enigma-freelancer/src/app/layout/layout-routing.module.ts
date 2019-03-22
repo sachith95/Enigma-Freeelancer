@@ -7,6 +7,7 @@ import { JobCreationComponent } from './job-creation/job-creation.component';
 import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
 import { MapViewComponent } from './map-view/map-view.component';
+import { ProfilesComponent } from './profiles/profiles.component';
 
 
 const routes: Routes = [
@@ -31,6 +32,7 @@ const routes: Routes = [
             { path: 'Home', component: HomeComponent },
             { path: 'User', component: UserComponent },
             { path: 'mapView', component: MapViewComponent },
+            { path: 'profile', component: ProfilesComponent }
             
         ]
     }

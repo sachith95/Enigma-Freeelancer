@@ -15,6 +15,7 @@ import { UserComponent } from './user/user.component';
 import { MapViewComponent } from './map-view/map-view.component';
 import { NotifierModule } from 'angular-notifier';
 import { FirebaseService } from '../services/firebase.service';
+import { ProfilesComponent } from './profiles/profiles.component';
 
 
 @NgModule({
@@ -28,6 +29,6 @@ import { FirebaseService } from '../services/firebase.service';
         FormsModule,
         NotifierModule
     ],
-    declarations: [LayoutComponent, SidebarComponent, HeaderComponent,JobCreationComponent,HomeComponent, UserComponent, MapViewComponent]
+    declarations: [LayoutComponent, SidebarComponent, HeaderComponent,JobCreationComponent,HomeComponent, UserComponent, MapViewComponent, ProfilesComponent]
 })
 export class LayoutModule {}
