@@ -10,8 +10,8 @@
         <div class="col-lg-6">
             <div class="form-group">
                 <label>Job Group</label>
-                <select class="form-control" (change)="getSelectedGroup()" formControlName="JobGroupID" [value]="0">
-                    <!-- <option value="0" selected>Select a Group</option> -->
+                <select class="form-control" (change)="getSelectedGroup()" formControlName="JobGroupID" [value]="-1">
+                    <option value="-1" selected>Select a Group</option>
                     <option *ngFor="let jobGroup of jobGroups" value="{{jobGroup.groupId}}">{{jobGroup.groupName}}
                     </option>
 
@@ -41,27 +41,38 @@
         <div class="col-lg-6">
             <div class="form-group">
                 <label for="disabledSelect">Job Category</label>
-                <select id="disabledSelect" class="form-control" formControlName="JobCategoryID">
-                    <option value="0" selected>Select a Category</option>
-                    <option *ngFor="let jobCat of jobCategories" value="{{jobCat.categoryID}}">{{jobCat.categoryName}}
+                <select id="disabledSelect" class="form-control" formControlName="JobCategoryID" [value]="-1">
+                    <option value="-1" selected>Select a Category</option>
+                    <option *ngFor="let jobCat of jobCatsList" value="{{jobCat.categoryID}}">{{jobCat.categoryName}}
                     </option>
                 </select>
             </div>   
             <fieldset class="form-group">
-                    <label>Due Date</label>
-                    <div class='input-group date' id='datetimepicker2'>
-                        <input type='text' class="form-control" placeholder=" Enter Date" formControlName="DueDate" />
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                    </div>
+
+                <label>Due Date</label>
+                <div class='input-group date' id='datetimepicker2'>
+                    <input type='date' class="form-control" placeholder=" Enter Date" formControlName="DueDate" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+                  
             </fieldset>    
             <fieldset class="form-group">
                     <label>Job Charge</label>
                     <input class="form-control" placeholder="Enter Charge" formControlName="Charge">
-                </fieldset>
+                    
+            </fieldset>
+
+            <fieldset class="form-group">
+             
+                <label for="file">File:</label>
+                <input type="file" (change)="choseFile($event)" accept=".PNG,.jpg" />
+                <!-- <img src="{{imgSrc|async}}"  style="width: 50px; height: 60px;" > -->
+
+                <img id="blah" [src]="imgSrc"  style="width: 100px; height: 120px;"/>
+            </fieldset>
 
         </div>
     </div>
 </form>
-=

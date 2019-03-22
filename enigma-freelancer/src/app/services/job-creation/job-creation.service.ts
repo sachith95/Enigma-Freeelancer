@@ -13,9 +13,9 @@ export class JobCreationService {
   jobList:AngularFireList<any>;
   ref;
   task: AngularFireUploadTask;
-
+  userKey;
   ngOnInit(){
-   
+   this.userKey="4dlKL56ZItOrV1qxkDNHTuZXGy12";
   }
 
   upload(file) {
@@ -39,41 +39,32 @@ export class JobCreationService {
 
   getJobs(){
       // this.jobList=this.af.list('Jobs/d9HYSJHLtjQr5f1WZz6bOZbErSQ2');
-      this.jobList=this.af.list('Jobs/4dlKL56ZItOrV1qxkDNHTuZXGy12');
+      this.jobList=this.af.list('Jobs/'+this.userKey);
 
       
       return this.jobList.snapshotChanges();
       
       }
   postJob(Job){
-debugger;
-    var currentDate = new Date();
-    var timestamp = currentDate.getTime();
-    var keyVal='job_'+timestamp;
-    // this.jobList.push({
-
-    //   group:Job.JobGroupID,
-    //   category:Job.JobCategoryID,
-    //   postedDate:timestamp,
-    //   dueDate:Job.DueDate,
-    //   timeStamp:timestamp,
-    //   title:Job.JobTitle,
-    //   charge:Job.Charge,
-    //   description:Job.Description
-    // });
-
-
-    this.af.object('Jobs/4dlKL56ZItOrV1qxkDNHTuZXGy12/'+keyVal).update({
-      
-      //$key:keyVal,
-      group:Job.JobGroupID,
-      category:Job.JobCategoryID,
-      postedDate:timestamp,
-      dueDate:Job.DueDate,
-      timeStamp:timestamp,
-      title:Job.JobTitle,
-      charge:Job.Charge,
-      description:Job.Description
-    })
+    if(this.userKey!=undefined)
+    {
+        debugger;
+        var currentDate = new Date();
+        var timestamp = currentDate.getTime();
+        var keyVal='job_'+timestamp;
+        this.af.object('Jobs/'+this.userKey+'/'+keyVal).update({
+          
+          //$key:keyVal,
+          group:Job.JobGroupID,
+          category:Job.JobCategoryID,
+          postedDate:timestamp,
+          dueDate:Job.DueDate,
+          timeStamp:timestamp,
+          title:Job.JobTitle,
+          charge:Job.Charge,
+          description:Job.Description,
+          imageLink:Job.ImgLink
+        })
     }
+  }
 }

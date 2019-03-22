@@ -20,6 +20,7 @@ import {AngularFireAuthModule} from '@angular/fire/auth';
 import {DashboardModule} from './layout/dashboard/dashboard.module';
 import { FirebaseService } from './services/firebase.service';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {AngularFireStorageModule} from '@angular/fire/storage';
 // AoT requires an exported function for factories
 export const createTranslateLoader = (http: HttpClient) => {
     /* for development
@@ -44,6 +45,7 @@ export const createTranslateLoader = (http: HttpClient) => {
         AngularFirestoreModule, // imports firebase/firestore, only needed for database features
         AngularFireAuthModule, AppRoutingModule, // imports firebase/auth, only needed for auth feature
         DashboardModule,
+        AngularFireStorageModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
