@@ -11,8 +11,6 @@ import { MapComponent } from './layout/map/map.component';
 import { AngularEsriModule } from 'angular-esri-components';
 import { HttpModule } from '@angular/http';
 import { AuthGuard } from './shared';
-
-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {AngularFireModule} from '@angular/fire'
 import { environment } from '../environments/environment';
@@ -21,8 +19,7 @@ import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {DashboardModule} from './layout/dashboard/dashboard.module';
 import { FirebaseService } from './services/firebase.service';
-
-
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 // AoT requires an exported function for factories
 export const createTranslateLoader = (http: HttpClient) => {
     /* for development
@@ -40,6 +37,7 @@ export const createTranslateLoader = (http: HttpClient) => {
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
+        MatSnackBarModule,
         // ReactiveFormsModule,
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireDatabaseModule,

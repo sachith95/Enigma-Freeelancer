@@ -21,6 +21,8 @@ let map: esri.Map;
 
 
 export class MapComponent implements OnInit {
+  aboutMe: any;
+  occupation: any;
 
    constructor(public firebaseService: FirebaseService,private route: ActivatedRoute) { }
    name: string;
@@ -55,7 +57,10 @@ export class MapComponent implements OnInit {
   }
  
   saveMapPosition(){
-    this.firebaseService.writeGeoLocationData(latitude , longitude);
+    this.name = this.UserForm.get('name').value;
+   // this.aboutMe = this.UserForm.get('aboutMe').value;
+    this.occupation = this.UserForm.get('occupation').value;
+    this.firebaseService.writeGeoLocationData(latitude , longitude,this.name,this.occupation,this.selectedType);
   }
 
   createForm() {

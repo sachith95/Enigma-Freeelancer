@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { loadModules } from 'esri-loader';
 import esri = __esri;
+import * as firebase from 'firebase';
 
 let sceneView: esri.SceneView
 let mapView: esri.MapView
@@ -14,33 +15,26 @@ let map: esri.Map;
 export class MapViewComponent implements OnInit {
 
   constructor(public firebaseService:FirebaseService) { }
+ occupation:string;
+ name:string;
+ type:string;
 
+  
   ngOnInit() {
+
     loadModules([ 'esri/Map',
       'esri/views/MapView', 'esri/views/SceneView',"esri/geometry/Point", "esri/Graphic",
        'esri/layers/GraphicsLayer','esri/widgets/Search', 'esri/widgets/BasemapGallery', 'esri/widgets/Expand', 'esri/widgets/Locate', "esri/PopupTemplate",     
     ]).then(([EsriMap, EsriMapView,EsriSceneView,Point,Graphic,GraphicsLayer,Search,BasemapGallery,Expand,Locate,PopupTemplate])=>{
       var point;
       var pointGraphic;
-      var occupation:string="TEST";
-      var aboutME:string="test";
-
-      function getuserData(key){
-        this.firebaseService.getUserData(key).once("value", (snapshot) => {
-            snapshot.forEach(function(childDataSnapshot) {
-              var childDatasanp = childDataSnapshot.val();
-               occupation = childDatasanp.occupation;
-            });
-          });
-      }
+      var occupation:string;
+      var aboutME:string;
+      var template;
       const mapProperties: esri.MapProperties = {
         basemap: 'streets'
       };
-      var template = new PopupTemplate({
-        title: occupation ,
-        content: aboutME
-      });
-     
+
       map  = new EsriMap(mapProperties);
       const mapViewProperties: esri.MapViewProperties = {
         container: 'viewDiv',
@@ -48,7 +42,7 @@ export class MapViewComponent implements OnInit {
         zoom: 12,
         map: map
       };
-
+ 
       mapView  = new EsriSceneView(mapViewProperties);
       const basemapWidet = new BasemapGallery({
         view: mapView
@@ -57,7 +51,7 @@ export class MapViewComponent implements OnInit {
         view: mapView
       });
       
-
+      const unit = "kilometers";
        const bgExpand = new Expand({
         view: mapView,
         content: basemapWidet,
@@ -89,7 +83,22 @@ export class MapViewComponent implements OnInit {
           width: 2
         }
       };
-
+      var markerSymbol1 = {
+        type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+        color: [239, 5, 5],
+        outline: { // autocasts as new SimpleLineSymbol()
+          color: [255, 255, 255],
+          width: 2
+        }
+      };
+      var markerSymbol2 = {
+        type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+        color: [5, 5, 239],
+        outline: { // autocasts as new SimpleLineSymbol()
+          color: [255, 255, 255],
+          width: 2
+        }
+      };
   
       this.firebaseService.getUserslocations().once("value", (snapshot) => {
         console.log(snapshot);
@@ -107,8 +116,6 @@ export class MapViewComponent implements OnInit {
 
           // key will be "ada" the first time and "alan" the second time
           var key = childSnapshot.key;
-         // getuserData(key);
-          
           // childData will be the actual contents of the child
           var childData = childSnapshot.val();
           console.log('key:',key);
@@ -119,15 +126,32 @@ export class MapViewComponent implements OnInit {
             longitude:childData.latitude,
             latitude: childData.longitude
           };
-          //  point = new Point ({
-          //   longitude:childData.longitude,
-          //   latitude: childData.latitude
-          // });
-           pointGraphic = new Graphic({
+          template = new PopupTemplate({
+            title: "Hey i'm "+childData.name,
+            content:"I am a"+childData.occupation
+          });
+         if(childData.type == "employee"){
+          pointGraphic = new Graphic({
             geometry: point,
             symbol: markerSymbol,
             popupTemplate: template
           });
+         }
+         else if(childData.type == "employeer"){
+          pointGraphic = new Graphic({
+            geometry: point,
+            symbol: markerSymbol1,
+            popupTemplate: template
+          });
+         }
+    else{
+          pointGraphic = new Graphic({
+            geometry: point,
+            symbol: markerSymbol2,
+            popupTemplate: template
+          });
+       }
+          
           //allObjects.push (pointGraphic);
            graphicsLayer.add(pointGraphic);
          // mapView.graphics.add(pointGraphic);

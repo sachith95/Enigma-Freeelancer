@@ -9,7 +9,6 @@ import { UserModule } from './user.module';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ajax } from 'rxjs/ajax';
 
-
 class ImageSnippet {
   constructor(public src: string, public file: File) {}
 }
@@ -67,7 +66,7 @@ export class UserComponent implements OnInit {
               private router: Router,
               private fb: FormBuilder,
               private http:HttpClient) { }
-
+    
   ngOnInit() {
     this.createForm();
     this.getuser();
@@ -93,7 +92,9 @@ export class UserComponent implements OnInit {
     reader.readAsDataURL(this.file);
   }
 
-
+  // showSuccess() {
+  //   this.toastr.success('Hello world!', 'Toastr fun!');
+  // }
   getuser() {
     this.firebaseService.getUser().once("value", (snapshot) => {
       this.editUserForm.patchValue({ name: snapshot.val().name });

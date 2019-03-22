@@ -13,6 +13,8 @@ import { JobCreationComponent } from './job-creation/job-creation.component';
 import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
 import { MapViewComponent } from './map-view/map-view.component';
+import { NotifierModule } from 'angular-notifier';
+import { FirebaseService } from '../services/firebase.service';
 
 
 @NgModule({
@@ -23,8 +25,8 @@ import { MapViewComponent } from './map-view/map-view.component';
         NgbDropdownModule,
         DashboardModule,
         ReactiveFormsModule,
-        FormsModule
-      
+        FormsModule,
+        NotifierModule
     ],
     declarations: [LayoutComponent, SidebarComponent, HeaderComponent,JobCreationComponent,HomeComponent, UserComponent, MapViewComponent]
 })
