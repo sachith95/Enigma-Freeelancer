@@ -32,6 +32,7 @@ export class JobCreationComponent implements OnInit {
     createdUserName: new FormControl(),
     JobGroupID: new FormControl('-1', Validators.required),
     JobCategoryID: new FormControl('-1', Validators.required),
+    CategoryName: new FormControl('', Validators.required),
     DueDate: new FormControl('', Validators.required),
     JobTitle: new FormControl('', Validators.required),
     Charge: new FormControl('', Validators.required),
@@ -41,7 +42,9 @@ export class JobCreationComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.userKey="izDGwZoiYUVSzksEsYFZkNepsc33";
+    // this.userKey="izDGwZoiYUVSzksEsYFZkNepsc33";
+
+    this.userKey=localStorage.getItem("UID");
     this.getJobGroups();
     this.service.getJobs();
   }
@@ -56,11 +59,12 @@ export class JobCreationComponent implements OnInit {
 
     reader.readAsDataURL(file);
     this.JobDetailForm.controls['Img'].setValue($event.target.files[0]);
+    this.upload();
     
     }
  }
  upload() {
-  debugger;
+  debugger
   var path='images/userImages/';
   var timeStamp = new Date().getTime();
   var file=this.JobDetailForm.controls['Img'].value;
@@ -71,13 +75,20 @@ export class JobCreationComponent implements OnInit {
       const ref = this.afStorage.ref(fullPath).child(timeStamp.toString());  
       ref.put(file).then(function(snapshot){
         snapshot.ref.getDownloadURL().then(function(url){
-          this.JobDetailForm.controls['ImgLink'].setValue(url);
+          // debugger
+          localStorage.setItem("jobImg",url);
         });
       }).catch((error) =>{
         console.log("Error","There was an error!!! " + error);
       });
 
   }
+
+  // var url
+  // url=this.service.upload(file);
+
+     
+    
  
 
 }
@@ -98,7 +109,10 @@ export class JobCreationComponent implements OnInit {
   getJobList(groupId){
     this.jobList
   }
-  
+  SelectedCat(categoryName){
+    var val=event.target['options'][event.target['options'].selectedIndex].text;
+    this.JobDetailForm.controls['CategoryName'].setValue(val);
+  }
 
   getJobCategories(groupId){
 
@@ -153,6 +167,26 @@ export class JobCreationComponent implements OnInit {
 
   public postJob(): void {
     this.upload();
-    this.service.postJob(this.JobDetailForm.value);
+  
   }
+  
+  public postJobs(): void {
+    this.JobDetailForm.controls['ImgLink'].setValue(localStorage.getItem("jobImg"));
+    if(this.service.postJob(this.JobDetailForm.value)!=false){
+      this.clearFields();
+    }
+  }
+  public clearFields(){
+    this.JobDetailForm.controls['JobGroupID'].setValue(-1);
+    this.JobDetailForm.controls['JobCategoryID'].setValue(-1);
+    this.JobDetailForm.controls['CategoryName'].setValue('');
+    this.JobDetailForm.controls['DueDate'].setValue('');
+    this.JobDetailForm.controls['JobTitle'].setValue('');
+    this.JobDetailForm.controls['Charge'].setValue('');
+    this.JobDetailForm.controls['Description'].setValue('');
+    this.JobDetailForm.controls['Img'].setValue('');
+    this.JobDetailForm.controls['ImgLink'].setValue('');
+    this.imgSrc();
+  }
+
 }

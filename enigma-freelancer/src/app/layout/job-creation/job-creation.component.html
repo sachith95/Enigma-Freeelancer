@@ -4,7 +4,7 @@
 </div>
 
 
-<form  [formGroup]="JobDetailForm" id="JobDetailForm" (ngSubmit)="postJob()">
+<form  [formGroup]="JobDetailForm" id="JobDetailForm" (ngSubmit)="postJobs()">
     <div class="row" style="margin-top: 20px">
 
         <div class="col-lg-6">
@@ -41,7 +41,7 @@
         <div class="col-lg-6">
             <div class="form-group">
                 <label for="disabledSelect">Job Category</label>
-                <select id="disabledSelect" class="form-control" formControlName="JobCategoryID" [value]="-1">
+                <select id="disabledSelect" class="form-control" (change)="SelectedCat($event)"formControlName="JobCategoryID" [value]="-1">
                     <option value="-1" selected>Select a Category</option>
                     <option *ngFor="let jobCat of jobCatsList" value="{{jobCat.categoryID}}">{{jobCat.categoryName}}
                     </option>
@@ -70,7 +70,7 @@
                 <input type="file" (change)="choseFile($event)" accept=".PNG,.jpg" />
                 <!-- <img src="{{imgSrc|async}}"  style="width: 50px; height: 60px;" > -->
 
-                <img id="blah" [src]="imgSrc"  style="width: 100px; height: 120px;"/>
+                <img id="blah" [src]="imgSrc||async"  style="width: 100px; height: 120px;"/>
             </fieldset>
 
         </div>

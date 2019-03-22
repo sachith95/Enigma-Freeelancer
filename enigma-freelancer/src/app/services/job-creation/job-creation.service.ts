@@ -2,6 +2,8 @@ import { Injectable,OnInit } from '@angular/core';
 import {AngularFireDatabaseModule,AngularFireList,AngularFireDatabase} from '@angular/fire/database';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireStorage,AngularFireUploadTask} from '@angular/fire/storage';
+import { finalize } from 'rxjs/operators';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,22 +14,40 @@ export class JobCreationService {
   jobGroupList:AngularFireList<any>;
   jobList:AngularFireList<any>;
   ref;
-  task: AngularFireUploadTask;
   userKey;
+  task:AngularFireUploadTask
+
   ngOnInit(){
-   this.userKey="4dlKL56ZItOrV1qxkDNHTuZXGy12";
+    
+  //  this.userKey="4dlKL56ZItOrV1qxkDNHTuZXGy12";
+  this.userKey=localStorage.getItem("UID");
   }
 
   upload(file) {
-    debugger;
+    var downloadURL
     
+    var path='images/userImages/';
+    var timeStamp = new Date().getTime();
+    if(file!=undefined)
+    {
+        const randomId = Math.random().toString(36).substring(2);
+        var fullPath=path+'/'+this.userKey+'/';
+        const ref = this.afStorage.ref(fullPath).child(timeStamp.toString());  
+        ref.put(file).then(function(snapshot){
+          snapshot.ref.getDownloadURL().then(function(url){
+            URL=url;
+            return URL;
+          });
+        }).catch((error) =>{
+          console.log("Error","There was an error!!! " + error);
+        });
+   
 
+        
+        
+  
+    }
 
-  const randomId = Math.random().toString(36).substring(2);
-
-  this.ref = this.afStorage.ref(randomId);
-
-  this.task = this.afStorage.upload('/images/userImages/4dlKL56ZI...NHTuZXGy18/'+randomId,file );  
   }
   getJobGroups(){
     return this.af.list('Group').snapshotChanges();  
@@ -46,6 +66,8 @@ export class JobCreationService {
       
       }
   postJob(Job){
+    var rtVal=true;
+    this.userKey=localStorage.getItem("UID");
     if(this.userKey!=undefined)
     {
         debugger;
@@ -63,8 +85,14 @@ export class JobCreationService {
           title:Job.JobTitle,
           charge:Job.Charge,
           description:Job.Description,
-          imageLink:Job.ImgLink
-        })
+          postPic:Job.ImgLink
+        }).catch((error) =>{
+          rtVal= false;
+        });
+
+    }else{
+      rtVal=false
     }
+    return rtVal;
   }
 }
