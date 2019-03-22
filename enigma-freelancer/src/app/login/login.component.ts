@@ -67,6 +67,7 @@ export class LoginComponent implements OnInit {
         .then(res => {
             debugger;
             localStorage.setItem("UID",res.user.uid);
+            
             console.log(res);
             console.log(res.user.uid);
           this.router.navigate(['/dashboard']);
