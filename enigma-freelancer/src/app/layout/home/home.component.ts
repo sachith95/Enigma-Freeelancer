@@ -23,6 +23,8 @@ export class HomeComponent implements OnInit {
     JobTitle: "",
     Charge: "",
     Description: "",
+    postPic: "",
+    categoryName: "",
   }
   fireJobList = [];
   jobList1 = [];
@@ -167,6 +169,8 @@ export class HomeComponent implements OnInit {
                       JobTitle: "",
                       Charge: "",
                       Description: "",
+                      postPic: "",
+                      categoryName: "",
                     }
                     this.newJob.JobTitle = job.child("title").val();
                     this.newJob.JobGroupID = job.child("group").val();
@@ -174,6 +178,8 @@ export class HomeComponent implements OnInit {
                     this.newJob.Charge = job.child("charge").val();
                     this.newJob.Description = job.child("description").val();
                     this.newJob.DueDate = job.child("duedate").val();
+                    this.newJob.postPic = job.child("postPic").val();
+                    this.newJob.categoryName = job.child("categoryName").val();
                     this.newJobList.push(this.newJob)
                 return false;
               })
@@ -207,6 +213,8 @@ export class HomeComponent implements OnInit {
                       JobTitle: "",
                       Charge: "",
                       Description: "",
+                      postPic: "",
+                      categoryName: "",
                     }
                     this.newJob.JobTitle = job.child("title").val();
                     this.newJob.JobGroupID = job.child("group").val();
@@ -214,6 +222,8 @@ export class HomeComponent implements OnInit {
                     this.newJob.Charge = job.child("charge").val();
                     this.newJob.Description = job.child("description").val();
                     this.newJob.DueDate = job.child("duedate").val();
+                    this.newJob.postPic = job.child("postPic").val();
+                    this.newJob.categoryName = job.child("categoryName").val();
                     this.newJobList.push(this.newJob)
                   }
                 return false;
@@ -247,6 +257,8 @@ export class HomeComponent implements OnInit {
                       JobTitle: "",
                       Charge: "",
                       Description: "",
+                      postPic: "",
+                      categoryName: "",
                     }
                     this.newJob.JobTitle = job.child("title").val();
                     this.newJob.JobGroupID = job.child("group").val();
@@ -254,6 +266,8 @@ export class HomeComponent implements OnInit {
                     this.newJob.Charge = job.child("charge").val();
                     this.newJob.Description = job.child("description").val();
                     this.newJob.DueDate = job.child("duedate").val();
+                    this.newJob.postPic = job.child("postPic").val();
+                    this.newJob.categoryName = job.child("categoryName").val();
                     this.newJobList.push(this.newJob)
                   }
                 return false;

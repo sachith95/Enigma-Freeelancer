@@ -30,7 +30,8 @@
         <i class="fa fa-industry-alt"></i>
         <h3 class="box-title">Available Jobs</h3>
     </div>
-    <div class="box-body">
+    
+    <!-- <div class="box-body">
         <div class="row">
             <div class="card-deck card-columns">
                 <div class="col-lg-6 col-xs-12" style="margin-top: 10px" *ngFor="let group of newJobList">
@@ -51,9 +52,9 @@
         <div class="row">
         </div>
         
-    </div>
+    </div> -->
 
-
+<!-- 
 
     <div class="backside">
         <div class="card">
@@ -86,5 +87,24 @@
                 </ul>
             </div>
         </div>
+    </div> -->
+
+    <div class="cards" *ngFor="let jobData of newJobList">
+        <div class="image">
+            <img src="{{jobData.postPic}}"> 
+        </div>
+        <div class="title">
+            <h3>{{jobData.categoryName}}</h3>
+        </div>
+        <div class="title1">
+                <h6>Rs.{{jobData.Charge}}</h6>
+            </div>
+        <div class="des">
+            <p>{{jobData.Description}}</p>
+            <button>Read More...</button>
+            
+        </div>
     </div>
+
+
 </div>
