@@ -96,7 +96,7 @@ export class FirebaseService {
       }
     });
   }
-  writeUserData(Name, Email, Address, aboutMe, country, birthday, occupation, ContactNo, skills, profilePic) {
+  writeUserData(Name, Email, Address, aboutMe, country, birthday, occupation, ContactNo, skills, edu,profilePic) {
     firebase.database().ref('Users/' + this.userId).set({
       name: Name,
       email: Email,
@@ -106,6 +106,7 @@ export class FirebaseService {
       birthday: birthday,
       occupation: occupation,
       contactNo: ContactNo,
+      education: edu,
       profilePic: profilePic
 
     }, (error) => {

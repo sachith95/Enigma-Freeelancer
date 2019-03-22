@@ -42,6 +42,7 @@ export class UserComponent implements OnInit {
   profilePicture ='https://firebasestorage.googleapis.com/v0/b/enigma-20605.appspot.com/o/defaultpic.jpg?alt=media&token=d9696697-92aa-4e15-b531-77c4f2ef1157';
   public message: string;
   file: File;
+  edu: any;
  
   preview(files) {
     if (files.length === 0)
@@ -103,8 +104,9 @@ export class UserComponent implements OnInit {
       this.editUserForm.patchValue({ occupation: snapshot.val().occupation });
       this.editUserForm.patchValue({ aboutMe: snapshot.val().aboutMe });
       this.editUserForm.patchValue({ country: snapshot.val().country });
-      this.editUserForm.patchValue({ ContactNo: snapshot.val().contactNo });
+      this.editUserForm.patchValue({ contactNo: snapshot.val().contactNo });
       this.editUserForm.patchValue({ birthday: snapshot.val().birthday });
+      this.editUserForm.patchValue({ education: snapshot.val().education });
       this.profilePicture = snapshot.val().profilePic; 
     }, function (error) {
       console.log("error" + error.code);
@@ -121,7 +123,8 @@ export class UserComponent implements OnInit {
       birthday: new FormControl(''),
       occupation: new FormControl(''),
       contactNo: new FormControl(''),
-      skills: new FormControl('')
+      skills: new FormControl(''),
+      education: new FormControl('')
     });
 
   }
@@ -136,11 +139,12 @@ export class UserComponent implements OnInit {
     this.occupation = this.editUserForm.get('occupation').value;
     this.contactNo = this.editUserForm.get('contactNo').value;
     this.skills = this.editUserForm.get('skills').value;
+    this.edu = this.editUserForm.get('education').value;
     this.editUser();
   }
 
   editUser(): void {
-    this.firebaseService.writeUserData(this.name, this.email, this.address,this.aboutMe, this.country, this.birthday, this.occupation, this.contactNo,this.skills,this.profilePicture);
+    this.firebaseService.writeUserData(this.name, this.email, this.address,this.aboutMe, this.country, this.birthday, this.occupation, this.contactNo,this.skills,this.edu ,this.profilePicture);
   }
   getLocation(): void{
     if (navigator.geolocation) {

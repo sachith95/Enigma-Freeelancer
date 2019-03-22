@@ -110,16 +110,11 @@ export class MapComponent implements OnInit {
         image: './../add.png'
        });
 
-      const featureLayer = new FeatureLayer({
-          url: 'https://services9.arcgis.com/8DxVBkEZX2pin6L9/arcgis/rest/services/enigmafreelancer/FeatureServer',
-          outFields: ['*'],
-          popupEnabled: true
-        });
+ 
       
       // Set type for Map constructor properties
       const mapProperties: esri.MapProperties = {
-        basemap: 'streets',
-        layers : featureLayer
+        basemap: 'streets'
       };
 
       map  = new EsriMap(mapProperties);
@@ -153,13 +148,7 @@ export class MapComponent implements OnInit {
         expandTooltip: 'change Basemap',
         expandIconClass: 'esri-icon-basemap'
      });
-     const legend = new Legend({
-      view: mapView,
-      layerInfos: [{
-        layer: featureLayer,
-        title: 'Legends'
-      }]
-      });
+    
 
       mapView.popup.autoOpenEnabled = false;
       mapView.on('click', function(event) {
@@ -257,10 +246,6 @@ export class MapComponent implements OnInit {
         
       mapView.ui.add(searchWidget, {
         position: 'top-right',
-        index: 0
-       });
-       mapView.ui.add(legend, {
-        position: 'bottom-left',
         index: 0
        });
       mapView.ui.add(locateBtn, {
