@@ -1,27 +1,90 @@
+<form [formGroup]="JobDetailForm" id="JobDetailForm" (ngSubmit)="postJob()">
+  <div class="row" style="margin-top: 20px">
+
+      <div class="col-lg-6">
+          <div class="form-group">
+              <label>Job Group</label>
+              <select class="form-control" (change)="selectedGroup()" formControlName="JobGroupID" [value]="-1">
+                  <option value="-1" selected>Select a Group</option>
+                  <option *ngFor="let jobGroup of jobGroups" value="{{jobGroup.groupId}}">{{jobGroup.groupName}}
+                  </option>
+
+              </select>
+          </div>
+      </div>
+      <div class="col-lg-6">
+          <div class="form-group">
+              <label >Job Category</label>
+              <select  class="form-control" (change)="selectedCategory()" formControlName="JobCategoryID" [value]="-1">
+                  <option value="-1" selected>Select a Category</option>
+                  <option *ngFor="let jobCat of jobCatsList" value="{{jobCat.categoryID}}">{{jobCat.categoryName}}
+                  </option>
+              </select>
+          </div>   
+      </div>
+  </div>
+</form>
+
 <div class="box box-info">
   <div class="box-header">
-    <i class="fa fa-industry-alt"></i>
-    <h3 class="box-title">Available Jobs</h3>
+      <i class="fa fa-industry-alt"></i>
+      <h3 class="box-title">Available Jobs</h3>
   </div>
   <div class="box-body">
-    <div class="row">
-      <div class="card-deck card-columns">
-        <div class="col-lg-6 col-xs-12" style="margin-top: 10px" *ngFor="let group of tileGroupes">
-          <div class="card" style="height:100%; width: 100%;"  >
-              <div class="card-body">
-                  <h5 class="card-title"><strong>{{group.title}}</strong></h5>
-                  <p class="card-text">{{group.description}}</p>
-          
-                  <a routerLink='/Features_Module' class="small-box-footer">
-                    View Job
-                    <i class="fa fa-arrow-circle-right"></i>
-                  </a>
-                </div>
+      <div class="row">
+          <div class="card-deck card-columns">
+              <div class="col-lg-6 col-xs-12" style="margin-top: 10px" *ngFor="let group of newJobList">
+                  <div class="card" style="height:100%; width: 100%;">
+                      <div class="card-body">
+                          <h5 class="card-title"><strong>{{group.JobTitle}}</strong></h5>
+                          <p class="card-text">{{group.Description}}</p>
+
+                          <a routerLink='/Features_Module' class="small-box-footer">
+                              View Job
+                              <i class="fa fa-arrow-circle-right"></i>
+                          </a>
+                      </div>
+                  </div>
+              </div>
           </div>
-        </div>
       </div>
-    </div>
+      <div class="row">
+      </div>
+      
+  </div>
+
+
+
+  <div class="backside">
+      <div class="card">
+          <div class="card-body text-center mt-4">
+              <h4 class="card-title">Sunlimetech</h4>
+              <p class="card-text">This is basic card with image on top, title, description and button.This is basic
+                  card with image on top, title, description and button.This is basic card with image on top, title,
+                  description and button.</p>
+              <ul class="list-inline">
+                  <li class="list-inline-item">
+                      <a class="social-icon text-xs-center" target="_blank" href="#">
+                          <i class="fa fa-facebook"></i>
+                      </a>
+                  </li>
+                  <li class="list-inline-item">
+                      <a class="social-icon text-xs-center" target="_blank" href="#">
+                          <i class="fa fa-twitter"></i>
+                      </a>
+                  </li>
+                  <li class="list-inline-item">
+                      <a class="social-icon text-xs-center" target="_blank" href="#">
+                          <i class="fa fa-skype"></i>
+                      </a>
+                  </li>
+                  <li class="list-inline-item">
+                      <a class="social-icon text-xs-center" target="_blank" href="#">
+                          <i class="fa fa-google"></i>
+                      </a>
+                  </li>
+              </ul>
+          </div>
+      </div>
   </div>
 </div>
-
-
