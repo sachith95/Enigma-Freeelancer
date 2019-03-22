@@ -15,7 +15,12 @@ export class HomeService {
   
   getJobs(){
     // this.jobList=this.af.list('Jobs/d9HYSJHLtjQr5f1WZz6bOZbErSQ2');
-    this.jobList=this.af.list('Jobs/4dlKL56ZItOrV1qxkDNHTuZXGy12');
+    // debugger;
+    var userKey="4dlKL56ZItOrV1qxkDNHTuZXGy12";
+    // this.jobList=this.af.list('Jobs/'+userKey);
+    this.jobList=this.af.list('Jobs/');
+
+    // return this.jobList.snapshotChanges();
     return this.jobList.snapshotChanges();
     
     }
