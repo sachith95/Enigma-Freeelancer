@@ -8,7 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
 import { MapViewComponent } from './map-view/map-view.component';
 import { ProfilesComponent } from './profiles/profiles.component';
-
+import { MyGigsComponent } from './my-gigs/my-gigs.component';
 
 const routes: Routes = [
     {
@@ -29,6 +29,7 @@ const routes: Routes = [
             { path: 'blank-page', loadChildren: './blank-page/blank-page.module#BlankPageModule' },
             { path: 'map', loadChildren: './map/map.module#MapModule' },
             { path: 'Job', component: JobCreationComponent },
+            { path: 'MyGigs', component: MyGigsComponent },
             { path: 'Home', component: HomeComponent },
             { path: 'User', component: UserComponent },
             { path: 'mapView', component: MapViewComponent },

@@ -68,6 +68,7 @@ export class JobCreationService {
   postJob(Job){
     var rtVal=true;
     this.userKey=localStorage.getItem("UID");
+    var profilePic="https://firebasestorage.googleapis.com/v0/b/enigma-20605.appspot.com/o/images%2FuserImages%2FCQxCC6KsB5hNVZqV2U4hWTjGANY2%2F1553293851610?alt=media&token=b4dc4770-b301-49fd-8f6e-86d7e7b786dc";
     if(this.userKey!=undefined)
     {
         debugger;
@@ -78,9 +79,11 @@ export class JobCreationService {
           
           //$key:keyVal,
           group:Job.JobGroupID,
+          categoryName:Job.CategoryName,
           category:Job.JobCategoryID,
-          postedDate:timestamp,
-          dueDate:Job.DueDate,
+          // postedDate:timestamp,
+          // dueDate:Job.DueDate,
+          profilePic:profilePic,
           timeStamp:timestamp,
           title:Job.JobTitle,
           charge:Job.Charge,

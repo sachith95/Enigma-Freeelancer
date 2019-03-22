@@ -186,7 +186,7 @@ export class JobCreationComponent implements OnInit {
     this.JobDetailForm.controls['Description'].setValue('');
     this.JobDetailForm.controls['Img'].setValue('');
     this.JobDetailForm.controls['ImgLink'].setValue('');
-    this.imgSrc();
+    this.imgSrc="";
   }
 
 }
