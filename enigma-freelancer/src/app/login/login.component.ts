@@ -70,7 +70,7 @@ export class LoginComponent implements OnInit {
             
             console.log(res);
             console.log(res.user.uid);
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/blank-page']);
         }, err => {
             debugger;
           console.log(err);
