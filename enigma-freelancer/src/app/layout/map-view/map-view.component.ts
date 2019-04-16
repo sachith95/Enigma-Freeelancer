@@ -37,7 +37,7 @@ export class MapViewComponent implements OnInit {
       var aboutME:string;
       var template;
       const featureLayer = new FeatureLayer({
-        url: 'https://services9.arcgis.com/8DxVBkEZX2pin6L9/ArcGIS/rest/services/enigmafreelancer/FeatureServer',
+        url: 'https://services9.arcgis.com/8DxVBkEZX2pin6L9/ArcGIS/rest/services/enigmafreelancer/FeatureServer/0',
         
         outFields: ['*'],
         popupEnabled: true
